@@ -1,3 +1,8 @@
+# custom
+sample/*
+!sample/pandoc-writer.odt
+!sample/reference.odt
+
 # Windows
 Thumbs.db
 ehthumbs.db

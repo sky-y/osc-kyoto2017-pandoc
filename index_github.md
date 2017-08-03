@@ -78,6 +78,7 @@ Q1: 普段はどんなファイルやドキュメントを扱っていますか�
     -   Emacs org-mode
     -   Wiki記法
         -   MediaWiki (Wikipedia)
+-   その他
 
 ------------------------------------------------------------------------
 
@@ -90,6 +91,7 @@ Q2: どのような目的でドキュメントを扱っていますか？
     -   プロジェクト管理（ガントチャート・UMLも含む）
 -   組織外との情報共有・コミュニケーション
 -   自分で読み返すためのメモ
+-   その他
 
 ------------------------------------------------------------------------
 
@@ -137,22 +139,22 @@ Pandocの概要
 
 ------------------------------------------------------------------------
 
-Pandocの魅力
-============
-
-------------------------------------------------------------------------
-
 Pandocとは
 ==========
 
--   [Pandoc - About pandoc](http://pandoc.org/index.html)
 -   文書変換ツール
     -   あるフォーマットで書かれた文書を、別のフォーマットに変換するツール
--   Pandocの特徴は、対応フォーマットが非常に多いこと
+    -   Pandocの特徴は、対応フォーマットが非常に多いこと
+-   [Pandoc公式サイト](http://pandoc.org/)
+    -   「a universal document converter」
+    -   汎用ドキュメントコンバータ
+-   オープンソースソフトウェアの1つ
+    -   ソースコード: [jgm/pandoc](https://github.com/jgm/pandoc)
+    -   ライセンス: GPL2
 
 ------------------------------------------------------------------------
 
-[<img src="figure/pandoc_diagram.jpg" style="width:15.0%" />](http://pandoc.org/diagram.jpg)
+[<img src="figure/pandoc-diagram_h800.jpg" style="width:15.0%" />](http://pandoc.org/diagram.jpg)
 
 ------------------------------------------------------------------------
 
@@ -176,11 +178,13 @@ Pandocとは
 ========================
 
 -   このスライド自体が、実はMarkdownで書かれています
--   元々は[John Gruberが作ったオリジナルの処理系](http://daringfireball.net/) でHTMLに変換するための略記法だった
+-   元々は[John Gruberが作ったオリジナルの処理系](http://daringfireball.net/) でHTMLに変換するための記法だった
 -   そのうちGitHubやPHPなどで記法が拡張された
     -   MultiMarkdownやPandocの登場をきっかけに、目的も「論文」「プレゼンテーション」「電子書籍」など用途が広がった
     -   数々の「方言」がある状態
--   基本のMarkdownだけを覚えれば、大抵は書けます
+-   基本のMarkdownだけを覚えれば、大抵は方言が違っても「大まかには」書ける
+    -   おすすめ早見表: [Markdown Reference (CommonMark)](http://commonmark.org/help/)
+    -   足りない部分は、各ツール・サービスのドキュメントを参照
     -   プレビューを行うのが鉄則
 
 ------------------------------------------------------------------------
@@ -191,7 +195,7 @@ Pandocでできないこと
 -   表主体の文書を扱うこと
     -   Excel, LibreOffice Calc
     -   一部に簡単な表を埋め込むことはできる（HTMLの`<table>`相当）
--   LibreOffice Impressに/を変換すること
+-   PowerPoint/LibreOffice Impressに変換すること
     -   LaTeX Beamer/HTMLプレゼンには変換可能
 
 ------------------------------------------------------------------------
@@ -237,7 +241,7 @@ Pandocが扱えるMarkdown方言
     -   HTMLだけでなくLaTeXなどの論文も意図した処理系
 -   CommonMark: `-f commonmark`
     -   仕様の曖昧さをなくすことを目的とした仕様/処理系
-    -   ここ最近は、事実上の標準に近づく（公式な標準ではない）
+    -   事実上の標準？（RFCなどによる正式な標準ではない）
 
 ------------------------------------------------------------------------
 
@@ -263,11 +267,9 @@ YAMLメタデータブロック
 -   改行などの書き方は、YAMLの文法に従う
     -   参考: [Rubyist Magazine - プログラマーのための YAML 入門 (初級編)](http://magazine.rubyist.net/?0009-YAML)
 -   このブロックで定義されたデータは、メタデータという種類の変数となる
-    -   `-M`オプションで定義できるものと同じ
-    -   `-V`オプションで定義できるもの（テンプレート変数）とほとんど同じ（微妙に違う）
     -   メタデータは文書変換する際のオプションや制御に使うことができる
         -   `pandoc -D (出力書式の名前)`で、実際の使われ方がわかる
-    -   このブロックを使えば、文書自体にmetadata変数を埋めこめる（便利）
+    -   このブロックを使えば、文書自体に文書変換のオプションを埋めこめる（便利）
 
 ------------------------------------------------------------------------
 
@@ -283,8 +285,6 @@ YAMLメタデータブロックの例
     transition: fade
     transitionSpeed: fast
     slideNumber: true
-    history: false
-    margin: 0
     ...
 
 ------------------------------------------------------------------------
@@ -309,33 +309,18 @@ Pandocをインストールする
 ターミナルを開く
 ================
 
--   Mac: ターミナル.app or iTerm2
--   Windows: (今回は)コマンドプロンプト
-    -   (分かっている方は)お好きなターミナルでも結構です
--   Linux: お好きなターミナル
-
-------------------------------------------------------------------------
-
-Pandocのインストール: パッケージマネージャ編
-============================================
-
--   原則として、Haskell処理系は不要です
--   Mac([Homebrew](http://brew.sh/index_ja.html))
-    -   `$ brew install pandoc`
--   Windows([Chocolatey](https://chocolatey.org/))
-    -   `> cinst -y pandoc`
--   Linux
-    -   バージョンが古いことがあるので注意
-    -   Debian: `$ sudo apt-get install pandoc`
-    -   CentOS: [pandocをCentOS7にインストール - Qiita](http://qiita.com/fk_2000/items/2ea57ea36b523c0cae5a) を参照
-    -   ソースコード: [Stack](https://docs.haskellstack.org/en/stable/README/)(Haskellビルドツール)が必要
-        -   [GitHub - jgm/pandoc: Universal markup converter](https://github.com/jgm/pandoc)
+-   Linux/Mac: ターミナル
+-   Windows: コマンドプロンプト
+    -   分かっている方は、お好きなターミナル・シェルでもOK
+-   基本的なコマンド操作については、今回は説明しません
+    -   コマンドが苦手な方は「何ができるか」を覚えてもらえれば幸いです
 
 ------------------------------------------------------------------------
 
 Pandocのインストール: インストーラ編
 ====================================
 
+-   Windows/Macの場合
 -   パッケージを直接落としてインストール
     1.  [ここからパッケージをダウンロード](https://github.com/jgm/pandoc/releases/latest)
         -   Windows: `.msi`, Mac: `.pkg`
@@ -343,27 +328,53 @@ Pandocのインストール: インストーラ編
 
 ------------------------------------------------------------------------
 
+Pandocのインストール: パッケージマネージャ編
+============================================
+
+-   Mac([Homebrew](http://brew.sh/index_ja.html))
+    -   `$ brew install pandoc`
+-   Windows([Chocolatey](https://chocolatey.org/))
+    -   `> cinst -y pandoc`
+
+------------------------------------------------------------------------
+
+Pandocのインストール: Linux編
+=============================
+
+-   Linux
+    -   [pandoc/INSTALL.md](https://github.com/jgm/pandoc/blob/master/INSTALL.md#linux) を参照
+    -   各種パッケージマネージャでインストールできます
+        -   Debian, Ubuntu, Slackware, Arch, Fedora, NiXOS, openSUSE, and gentoo
+        -   各々のパッケージマネージャで「pandoc」をsearch/installしてください
+        -   バージョンが古いことがあるので注意
+    -   ソースコードからビルド
+        -   Haskellのソースコードをビルドする必要があります
+        -   [Stack](https://docs.haskellstack.org/en/stable/README/)(Haskellビルドツール)を
+        -   ソースコード: [GitHub - jgm/pandoc](https://github.com/jgm/pandoc)
+
+------------------------------------------------------------------------
+
 wkhtmltopdfのインストール
 =========================
 
 -   PDF出力のために必要
-    -   TeXLive/MacTeXを入れていれば、LaTeX処理系も利用可能（説明略）
-    -   ただし、pLaTeXはNGなので、LuaLaTeX/XeLaTeXのみ
--   パッケージマネージャでインストール
-    -   Mac: `$ brew cask install wkhtmltopdf`
-        -   Caskの方なので注意
-    -   Windows: `> cinst -y wkhtmltopdf`
-    -   Debian: `$ sudo apt-get install wkhtmltopdf`
--   パッケージを直接落としてインストール
+    -   TeXLiveを入れていれば、LaTeX処理系も利用可能（説明略）
+    -   ただし、pLaTeXはNGなので、LuaLaTeX/XeLaTeXが必要です
+-   インストーラを直接落としてインストール
     1.  [wkhtmltopdf - Downloads](http://wkhtmltopdf.org/downloads.html)からダウンロード
     2.  インストール
+-   パッケージマネージャでインストール
+    -   Mac(Homebrew): `$ brew cask install wkhtmltopdf`
+        -   Caskの方なので注意
+    -   Windows(Chocolatey): `> cinst -y wkhtmltopdf`
+    -   Linux: 略（各々のパッケージマネージャで「wkhtmltopdf」をsearch/installしてください）
 
 ------------------------------------------------------------------------
 
-動作確認: Pandoc単体
-====================
+動作確認1: Pandoc単体
+=====================
 
-Bashにて確認（コマンドプロンプトも同様のはず）
+※ 藤原の環境：Windows (Chocolatey) + MSYS2
 
     $ pandoc --version
     $ pandoc --list-input-formats
@@ -373,15 +384,48 @@ Bashにて確認（コマンドプロンプトも同様のはず）
 
 ------------------------------------------------------------------------
 
-動作確認: Pandoc + wkhtmltopdf (PDF)
-====================================
+動作確認2: ファイルを入力
+=========================
+
+-   次の内容をテキストファイルで保存し、「hello.md」と保存する
+
+<!-- -->
+
+    # Hello
+    こんにちは
+
+------------------------------------------------------------------------
+
+動作確認2: ファイルを入力
+=========================
+
+-   コマンドを実行:
+
+<!-- -->
+
+    $ pandoc hello.md -o hello.html
+
+-   オプションのない引数(hello.md): 入力ファイル名
+-   `-o`: 出力ファイル名 (output)
+    -   `-t`（次スライド）を指定しない場合、拡張子から出力フォーマットを推測してくれる
+-   **注意: Pandocが対応している文字コードはUTF-8のみです**
+    -   UTF-8以外を扱う場合は、nkf/iconv/uconvなどの文字コード変換ツールをパイプ(`|`)に繋げます
+
+------------------------------------------------------------------------
+
+動作確認3: Pandoc + wkhtmltopdf (PDF)
+=====================================
 
     $ echo "**Hello**" | pandoc -f markdown -t html5 -o hello.pdf
 
--   `-f`: 入力フォーマット名
--   `-t`: 出力フォーマット名
--   `-o`: 出力ファイル名
--   入力ファイル名が指定されていない場合は、標準入力を使用
+-   `-f`: 入力フォーマット名 (from)
+    -   使えるフォーマット名は `pandoc --list-input-formats` で確認できる
+-   `-t`: 出力フォーマット名 (to)
+    -   使えるフォーマット名は `pandoc --list-output-formats` で確認できる
+    -   注意: wkhtmltopdfでPDFを出すときは `-t html5`を指定
+        -   内部で文字通り、HTML5に変換してからPDFに出すので
+-   `-o`: 出力ファイル名 (output)
+    -   注意: wkhtmltopdfでPDFを出すときは、`-o`の拡張子は`.pdf`を指定
 
 ------------------------------------------------------------------------
 

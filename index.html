@@ -128,6 +128,7 @@
 <li>MediaWiki (Wikipedia)</li>
 </ul></li>
 </ul></li>
+<li>その他</li>
 </ul>
 </section>
 <section id="q2-どのような目的でドキュメントを扱っていますか" class="slide level1">
@@ -141,6 +142,7 @@
 </ul></li>
 <li>組織外との情報共有・コミュニケーション</li>
 <li>自分で読み返すためのメモ</li>
+<li>その他</li>
 </ul>
 </section>
 <section id="この発表の概要" class="slide level1">
@@ -192,23 +194,29 @@
 <li>Markdownで電子書籍(EPUB)を作りたい</li>
 </ul>
 </section>
-<section id="pandocの魅力" class="slide level1">
-<h1>Pandocの魅力</h1>
-</section>
 <section id="pandocとは" class="slide level1">
 <h1>Pandocとは</h1>
 <ul>
-<li><a href="http://pandoc.org/index.html">Pandoc - About pandoc</a></li>
 <li>文書変換ツール
 <ul>
 <li>あるフォーマットで書かれた文書を、別のフォーマットに変換するツール</li>
-</ul></li>
 <li>Pandocの特徴は、対応フォーマットが非常に多いこと</li>
+</ul></li>
+<li><a href="http://pandoc.org/">Pandoc公式サイト</a>
+<ul>
+<li>「a universal document converter」</li>
+<li>汎用ドキュメントコンバータ</li>
+</ul></li>
+<li>オープンソースソフトウェアの1つ
+<ul>
+<li>ソースコード: <a href="https://github.com/jgm/pandoc">jgm/pandoc</a></li>
+<li>ライセンス: GPL2</li>
+</ul></li>
 </ul>
 </section>
 <section class="slide level1">
 
-<p><a href="http://pandoc.org/diagram.jpg"><img src="figure/pandoc_diagram.jpg" style="width:15.0%" /></a></p>
+<p><a href="http://pandoc.org/diagram.jpg"><img src="figure/pandoc-diagram_h800.jpg" style="width:15.0%" /></a></p>
 </section>
 <section id="対応フォーマット一部省略" class="slide level1">
 <h1>対応フォーマット（一部省略）</h1>
@@ -233,14 +241,16 @@
 <h1>そもそもMarkdownって何？</h1>
 <ul>
 <li>このスライド自体が、実はMarkdownで書かれています</li>
-<li>元々は<a href="http://daringfireball.net/">John Gruberが作ったオリジナルの処理系</a> でHTMLに変換するための略記法だった</li>
+<li>元々は<a href="http://daringfireball.net/">John Gruberが作ったオリジナルの処理系</a> でHTMLに変換するための記法だった</li>
 <li>そのうちGitHubやPHPなどで記法が拡張された
 <ul>
 <li>MultiMarkdownやPandocの登場をきっかけに、目的も「論文」「プレゼンテーション」「電子書籍」など用途が広がった</li>
 <li>数々の「方言」がある状態</li>
 </ul></li>
-<li>基本のMarkdownだけを覚えれば、大抵は書けます
+<li>基本のMarkdownだけを覚えれば、大抵は方言が違っても「大まかには」書ける
 <ul>
+<li>おすすめ早見表: <a href="http://commonmark.org/help/">Markdown Reference (CommonMark)</a></li>
+<li>足りない部分は、各ツール・サービスのドキュメントを参照</li>
 <li>プレビューを行うのが鉄則</li>
 </ul></li>
 </ul>
@@ -253,7 +263,7 @@
 <li>Excel, LibreOffice Calc</li>
 <li>一部に簡単な表を埋め込むことはできる（HTMLの<code>&lt;table&gt;</code>相当）</li>
 </ul></li>
-<li>LibreOffice Impressに/を変換すること
+<li>PowerPoint/LibreOffice Impressに変換すること
 <ul>
 <li>LaTeX Beamer/HTMLプレゼンには変換可能</li>
 </ul></li>
@@ -317,7 +327,7 @@
 <li>CommonMark: <code>-f commonmark</code>
 <ul>
 <li>仕様の曖昧さをなくすことを目的とした仕様/処理系</li>
-<li>ここ最近は、事実上の標準に近づく（公式な標準ではない）</li>
+<li>事実上の標準？（RFCなどによる正式な標準ではない）</li>
 </ul></li>
 </ul>
 </section>
@@ -353,13 +363,11 @@
 </ul></li>
 <li>このブロックで定義されたデータは、メタデータという種類の変数となる
 <ul>
-<li><code>-M</code>オプションで定義できるものと同じ</li>
-<li><code>-V</code>オプションで定義できるもの（テンプレート変数）とほとんど同じ（微妙に違う）</li>
 <li>メタデータは文書変換する際のオプションや制御に使うことができる
 <ul>
 <li><code>pandoc -D (出力書式の名前)</code>で、実際の使われ方がわかる</li>
 </ul></li>
-<li>このブロックを使えば、文書自体にmetadata変数を埋めこめる（便利）</li>
+<li>このブロックを使えば、文書自体に文書変換のオプションを埋めこめる（便利）</li>
 </ul></li>
 </ul>
 </section>
@@ -374,8 +382,6 @@ theme: sky-sky-y
 transition: fade
 transitionSpeed: fast
 slideNumber: true
-history: false
-margin: 0
 ...</code></pre>
 </section>
 <section id="補足-markdownと標準仕様" class="slide level1">
@@ -399,41 +405,21 @@ margin: 0
 <section id="ターミナルを開く" class="slide level1">
 <h1>ターミナルを開く</h1>
 <ul>
-<li>Mac: ターミナル.app or iTerm2</li>
-<li>Windows: (今回は)コマンドプロンプト
+<li>Linux/Mac: ターミナル</li>
+<li>Windows: コマンドプロンプト
 <ul>
-<li>(分かっている方は)お好きなターミナルでも結構です</li>
+<li>分かっている方は、お好きなターミナル・シェルでもOK</li>
 </ul></li>
-<li>Linux: お好きなターミナル</li>
-</ul>
-</section>
-<section id="pandocのインストール-パッケージマネージャ編" class="slide level1">
-<h1>Pandocのインストール: パッケージマネージャ編</h1>
+<li>基本的なコマンド操作については、今回は説明しません
 <ul>
-<li>原則として、Haskell処理系は不要です</li>
-<li>Mac(<a href="http://brew.sh/index_ja.html">Homebrew</a>)
-<ul>
-<li><code>$ brew install pandoc</code></li>
-</ul></li>
-<li>Windows(<a href="https://chocolatey.org/">Chocolatey</a>)
-<ul>
-<li><code>&gt; cinst -y pandoc</code></li>
-</ul></li>
-<li>Linux
-<ul>
-<li>バージョンが古いことがあるので注意</li>
-<li>Debian: <code>$ sudo apt-get install pandoc</code></li>
-<li>CentOS: <a href="http://qiita.com/fk_2000/items/2ea57ea36b523c0cae5a">pandocをCentOS7にインストール - Qiita</a> を参照</li>
-<li>ソースコード: <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>(Haskellビルドツール)が必要
-<ul>
-<li><a href="https://github.com/jgm/pandoc">GitHub - jgm/pandoc: Universal markup converter</a></li>
-</ul></li>
+<li>コマンドが苦手な方は「何ができるか」を覚えてもらえれば幸いです</li>
 </ul></li>
 </ul>
 </section>
 <section id="pandocのインストール-インストーラ編" class="slide level1">
 <h1>Pandocのインストール: インストーラ編</h1>
 <ul>
+<li>Windows/Macの場合</li>
 <li>パッケージを直接落としてインストール
 <ol type="1">
 <li><a href="https://github.com/jgm/pandoc/releases/latest">ここからパッケージをダウンロード</a>
@@ -444,47 +430,119 @@ margin: 0
 </ol></li>
 </ul>
 </section>
+<section id="pandocのインストール-パッケージマネージャ編" class="slide level1">
+<h1>Pandocのインストール: パッケージマネージャ編</h1>
+<ul>
+<li>Mac(<a href="http://brew.sh/index_ja.html">Homebrew</a>)
+<ul>
+<li><code>$ brew install pandoc</code></li>
+</ul></li>
+<li>Windows(<a href="https://chocolatey.org/">Chocolatey</a>)
+<ul>
+<li><code>&gt; cinst -y pandoc</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocのインストール-linux編" class="slide level1">
+<h1>Pandocのインストール: Linux編</h1>
+<ul>
+<li>Linux
+<ul>
+<li><a href="https://github.com/jgm/pandoc/blob/master/INSTALL.md#linux">pandoc/INSTALL.md</a> を参照</li>
+<li>各種パッケージマネージャでインストールできます
+<ul>
+<li>Debian, Ubuntu, Slackware, Arch, Fedora, NiXOS, openSUSE, and gentoo</li>
+<li>各々のパッケージマネージャで「pandoc」をsearch/installしてください</li>
+<li>バージョンが古いことがあるので注意</li>
+</ul></li>
+<li>ソースコードからビルド
+<ul>
+<li>Haskellのソースコードをビルドする必要があります</li>
+<li><a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>(Haskellビルドツール)を</li>
+<li>ソースコード: <a href="https://github.com/jgm/pandoc">GitHub - jgm/pandoc</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
 <section id="wkhtmltopdfのインストール" class="slide level1">
 <h1>wkhtmltopdfのインストール</h1>
 <ul>
 <li>PDF出力のために必要
 <ul>
-<li>TeXLive/MacTeXを入れていれば、LaTeX処理系も利用可能（説明略）</li>
-<li>ただし、pLaTeXはNGなので、LuaLaTeX/XeLaTeXのみ</li>
+<li>TeXLiveを入れていれば、LaTeX処理系も利用可能（説明略）</li>
+<li>ただし、pLaTeXはNGなので、LuaLaTeX/XeLaTeXが必要です</li>
 </ul></li>
-<li>パッケージマネージャでインストール
-<ul>
-<li>Mac: <code>$ brew cask install wkhtmltopdf</code>
-<ul>
-<li>Caskの方なので注意</li>
-</ul></li>
-<li>Windows: <code>&gt; cinst -y wkhtmltopdf</code></li>
-<li>Debian: <code>$ sudo apt-get install wkhtmltopdf</code></li>
-</ul></li>
-<li>パッケージを直接落としてインストール
+<li>インストーラを直接落としてインストール
 <ol type="1">
 <li><a href="http://wkhtmltopdf.org/downloads.html">wkhtmltopdf - Downloads</a>からダウンロード</li>
 <li>インストール</li>
 </ol></li>
+<li>パッケージマネージャでインストール
+<ul>
+<li>Mac(Homebrew): <code>$ brew cask install wkhtmltopdf</code>
+<ul>
+<li>Caskの方なので注意</li>
+</ul></li>
+<li>Windows(Chocolatey): <code>&gt; cinst -y wkhtmltopdf</code></li>
+<li>Linux: 略（各々のパッケージマネージャで「wkhtmltopdf」をsearch/installしてください）</li>
+</ul></li>
 </ul>
 </section>
-<section id="動作確認-pandoc単体" class="slide level1">
-<h1>動作確認: Pandoc単体</h1>
-<p>Bashにて確認（コマンドプロンプトも同様のはず）</p>
+<section id="動作確認1-pandoc単体" class="slide level1">
+<h1>動作確認1: Pandoc単体</h1>
+<p>※ 藤原の環境：Windows (Chocolatey) + MSYS2</p>
 <pre><code>$ pandoc --version
 $ pandoc --list-input-formats
 $ pandoc --list-output-formats
 $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 &lt;p&gt;&lt;strong&gt;Hello&lt;/strong&gt;&lt;/p&gt;</code></pre>
 </section>
-<section id="動作確認-pandoc-wkhtmltopdf-pdf" class="slide level1">
-<h1>動作確認: Pandoc + wkhtmltopdf (PDF)</h1>
+<section id="動作確認2-ファイルを入力" class="slide level1">
+<h1>動作確認2: ファイルを入力</h1>
+<ul>
+<li>次の内容をテキストファイルで保存し、「hello.md」と保存する</li>
+</ul>
+<pre><code># Hello
+こんにちは</code></pre>
+</section>
+<section id="動作確認2-ファイルを入力-1" class="slide level1">
+<h1>動作確認2: ファイルを入力</h1>
+<ul>
+<li>コマンドを実行:</li>
+</ul>
+<pre><code>$ pandoc hello.md -o hello.html</code></pre>
+<ul>
+<li>オプションのない引数(hello.md): 入力ファイル名</li>
+<li><code>-o</code>: 出力ファイル名 (output)
+<ul>
+<li><code>-t</code>（次スライド）を指定しない場合、拡張子から出力フォーマットを推測してくれる</li>
+</ul></li>
+<li><strong>注意: Pandocが対応している文字コードはUTF-8のみです</strong>
+<ul>
+<li>UTF-8以外を扱う場合は、nkf/iconv/uconvなどの文字コード変換ツールをパイプ(<code>|</code>)に繋げます</li>
+</ul></li>
+</ul>
+</section>
+<section id="動作確認3-pandoc-wkhtmltopdf-pdf" class="slide level1">
+<h1>動作確認3: Pandoc + wkhtmltopdf (PDF)</h1>
 <pre><code>$ echo &quot;**Hello**&quot; | pandoc -f markdown -t html5 -o hello.pdf</code></pre>
 <ul>
-<li><code>-f</code>: 入力フォーマット名</li>
-<li><code>-t</code>: 出力フォーマット名</li>
-<li><code>-o</code>: 出力ファイル名</li>
-<li>入力ファイル名が指定されていない場合は、標準入力を使用</li>
+<li><code>-f</code>: 入力フォーマット名 (from)
+<ul>
+<li>使えるフォーマット名は <code>pandoc --list-input-formats</code> で確認できる</li>
+</ul></li>
+<li><code>-t</code>: 出力フォーマット名 (to)
+<ul>
+<li>使えるフォーマット名は <code>pandoc --list-output-formats</code> で確認できる</li>
+<li>注意: wkhtmltopdfでPDFを出すときは <code>-t html5</code>を指定
+<ul>
+<li>内部で文字通り、HTML5に変換してからPDFに出すので</li>
+</ul></li>
+</ul></li>
+<li><code>-o</code>: 出力ファイル名 (output)
+<ul>
+<li>注意: wkhtmltopdfでPDFを出すときは、<code>-o</code>の拡張子は<code>.pdf</code>を指定</li>
+</ul></li>
 </ul>
 </section>
 <section id="pandocの基本的な使い方" class="slide level1">
@@ -756,6 +814,11 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
         transition: 'fade', // none/fade/slide/convex/concave/zoom
         // Transition speed
         transitionSpeed: 'fast', // default/fast/slow
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+        height: 720,
         // Factor of the display size that should remain empty around the content
         margin: 0,
 
