@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="藤原 由来">
-  <title>書式の自由が社会を変える―LibreOfficeとPandocができること</title>
+  <title>Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,11 +28,28 @@
     <div class="slides">
 
 <section>
-  <h1 class="title">書式の自由が社会を変える―LibreOfficeとPandocができること</h1>
+  <h1 class="title">Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する</h1>
   <p class="author">藤原 由来</p>
-  <p class="date">2017年4月29日</p>
+  <p class="date">2017年8月4日</p>
 </section>
 
+<section id="この発表について" class="slide level1">
+<h1>この発表について</h1>
+<ul>
+<li>文書変換ツール「Pandoc」の入門セミナーです</li>
+<li>対象者
+<ul>
+<li>ドキュメンテーション（文書の作成・処理）に興味のある方</li>
+<li>文書の作成・処理を効率化したい方</li>
+<li>Markdownなどの軽量マークアップ言語をうまく活用したい方</li>
+</ul></li>
+<li>前提とする知識：基本的なコマンドラインの使い方
+<ul>
+<li>ターミナル (Linux/Mac)</li>
+<li>コマンドプロンプト (Windows)</li>
+</ul></li>
+</ul>
+</section>
 <section id="自己紹介" class="slide level1">
 <h1>自己紹介</h1>
 <ul>
@@ -44,7 +61,7 @@
 </ul></li>
 <li>職業
 <ul>
-<li>フリープログラマ</li>
+<li>フリープログラマ・技術ライター</li>
 <li>専門学校 非常勤講師</li>
 </ul></li>
 </ul>
@@ -52,14 +69,14 @@
 <section id="pandocに関する活動" class="slide level1">
 <h1>Pandocに関する活動</h1>
 <ul>
-<li>Qiitaを中心に記事執筆
-<ul>
-<li><a href="http://qiita.com/sky_y/items/80bcd0f353ef5b8980ee">多様なフォーマットに対応！ドキュメント変換ツールPandocを知ろう - Qiita</a></li>
-</ul></li>
 <li>Pandocユーザーズガイドを和訳
 <ul>
 <li><a href="http://sky-y.github.io/site-pandoc-jp/users-guide/">Pandoc ユーザーズガイド 日本語版</a></li>
 <li>バージョンが古くなったので、改訂を予定</li>
+</ul></li>
+<li>Qiita等に記事執筆
+<ul>
+<li><a href="http://qiita.com/sky_y/items/80bcd0f353ef5b8980ee">多様なフォーマットに対応！ドキュメント変換ツールPandocを知ろう - Qiita</a></li>
 </ul></li>
 <li>日本Pandocユーザ会
 <ul>
@@ -78,35 +95,84 @@
 </ul></li>
 </ul>
 </section>
-<section id="pandocと私" class="slide level1">
-<h1>Pandocと私</h1>
+<section id="いきなりですが質問です" class="slide level1">
+<h1>いきなりですが質問です</h1>
+</section>
+<section id="q1-普段はどんなファイルやドキュメントを扱っていますか" class="slide level1">
+<h1>Q1: 普段はどんなファイルやドキュメントを扱っていますか？</h1>
 <ul>
-<li>院生時代の依頼
+<li>HTML</li>
+<li>LaTeX (数式の入ったドキュメント)</li>
+<li>XML系のドキュメント</li>
+<li>プログラミング言語のドキュメント機能
 <ul>
-<li>従来よりLaTeXで書かれた「教育用システムの利用手引」を、EPUBにできるかどうか検証してくれないか？</li>
-<li>このとき調べ回って、「Pandocというものがあるらしい」と気づいた</li>
+<li>Javadoc, Python docstringなど</li>
 </ul></li>
-<li>「LaTeXからEPUBに変換する」タスクが想像以上にあっさり実現
+<li>Microsoft Office
 <ul>
-<li>多少は難はあったが（input命令に当時は対応してない（今は対応）とか、組版がいけてないとか）</li>
-<li>この感動が、今の活動の原点</li>
+<li>Word, Excel, PowerPoint</li>
 </ul></li>
-<li>なんでこんなにすごいソフトウェアが、日本では知られていなかったんだろう？
+<li>LibreOffice (Apache OpenOffice)</li>
+</ul>
+</section>
+<section id="q1-普段はどんなファイルやドキュメントを扱っていますか-1" class="slide level1">
+<h1>Q1: 普段はどんなファイルやドキュメントを扱っていますか？</h1>
 <ul>
-<li>「Pandocを広めよう」と決意した瞬間</li>
+<li>軽量マークアップ言語
+<ul>
+<li>Markdown</li>
+<li>reStructuredText (Sphinx)</li>
+<li>Emacs org-mode</li>
+<li>Wiki記法
+<ul>
+<li>MediaWiki (Wikipedia)</li>
 </ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="q2-どのような目的でドキュメントを扱っていますか" class="slide level1">
+<h1>Q2: どのような目的でドキュメントを扱っていますか？</h1>
+<ul>
+<li>Webへの公開（CMS・ブログ・Wiki含む）</li>
+<li>組織内の情報共有
+<ul>
+<li>社内Wiki</li>
+<li>プロジェクト管理（ガントチャート・UMLも含む）</li>
+</ul></li>
+<li>組織外との情報共有・コミュニケーション</li>
+<li>自分で読み返すためのメモ</li>
 </ul>
 </section>
 <section id="この発表の概要" class="slide level1">
 <h1>この発表の概要</h1>
 <ul>
+<li>質問</li>
 <li>Pandocの概要</li>
 <li>Pandocをインストールする</li>
-<li>Pandocでドキュメントを変換する
+<li>Pandocの基本的な使い方
 <ul>
-<li>LibreOffice Writer文書を中心に</li>
+<li>Markdown ↔ LibreOffice Writer を例に</li>
 </ul></li>
-<li>「書式の自由」について</li>
+<li>Pandocレシピ集</li>
+<li>Pandocの高度な使い方（ごく簡潔に）</li>
+<li>まとめ・お知らせ</li>
+</ul>
+</section>
+<section id="この発表でやらないこと" class="slide level1">
+<h1>この発表で<strong>やらないこと</strong></h1>
+<ul>
+<li>プログラミング言語のドキュメント機能
+<ul>
+<li>Pandoc自体はHaskell用ドキュメンテーションに対応
+<ul>
+<li><a href="https://www.haskell.org/haddock/">Haddock</a>, <a href="https://wiki.haskell.org/Literate_programming">Literate Haskell</a></li>
+</ul></li>
+<li>Pandocとの組み合わせができる場合もある</li>
+</ul></li>
+<li>表形式のドキュメント（Excel, CSVなど）
+<ul>
+<li>現状のPandocが扱える文書モデルから離れるので</li>
+</ul></li>
 </ul>
 </section>
 <section id="pandocの概要" class="slide level1">
@@ -115,11 +181,15 @@
 <section id="こんなことに困っていませんか" class="slide level1">
 <h1>こんなことに困っていませんか？</h1>
 <ul>
-<li>Writerが重いのでテキストファイルで下書きしたい</li>
-<li>バージョン管理をしたいけど、Writer文書は<code>git diff</code>が取りにくい</li>
-<li>Writer文書をHTMLに変換せよとお達しがあった</li>
-<li>Writer文書をSphinx(reST)で使いたい</li>
-<li>Markdownなどでスライドショーを作りたい</li>
+<li>MS Word/LibreOffice Writer
+<ul>
+<li>重いのでテキストファイルで下書きしたい</li>
+<li>バージョン管理をしたいけど、Word文書はGit管理が面倒</li>
+</ul></li>
+<li>オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい</li>
+<li>MediaWiki記法で書いた原稿をSphinx(reST)で使いたい</li>
+<li>Markdownでスライドショーを作りたい</li>
+<li>Markdownで電子書籍(EPUB)を作りたい</li>
 </ul>
 </section>
 <section id="pandocの魅力" class="slide level1">
@@ -227,7 +297,7 @@
 <section id="pandocが扱えるmarkdown方言" class="slide level1">
 <h1>Pandocが扱えるMarkdown方言</h1>
 <ul>
-<li>Pandoc’s Markdown: <code>-f markdown</code>
+<li><a href="http://pandoc.org/MANUAL.html#pandocs-markdown">Pandoc’s Markdown</a>: <code>-f markdown</code>
 <ul>
 <li>Pandocにおける標準のMarkdown方言</li>
 <li>技術文書から論文・電子書籍まで幅広く対応</li>
@@ -250,6 +320,63 @@
 <li>ここ最近は、事実上の標準に近づく（公式な標準ではない）</li>
 </ul></li>
 </ul>
+</section>
+<section id="pandocs-markdownの特徴" class="slide level1">
+<h1>Pandoc’s Markdownの特徴</h1>
+<ul>
+<li>詳しくは <a href="http://pandoc.org/MANUAL.html#pandocs-markdown">Pandoc’s Markdown</a> を参照
+<ul>
+<li>または <a href="http://sky-y.github.io/site-pandoc-jp/users-guide/#pandocs-markdown">Pandoc ユーザーズガイド 日本語版</a> を参照</li>
+</ul></li>
+<li>HTMLの定義リスト(<code>&lt;dl&gt;</code>, <code>&lt;dt&gt;</code>, <code>&lt;dd&gt;</code>)がある</li>
+<li>表(<code>&lt;table&gt;</code>)は4種類ある
+<ul>
+<li>日本語には「Grid Table」か「Pipe Table」がおすすめ</li>
+</ul></li>
+<li><strong>ヘッダ部分にメタデータを記述できる（重要）</strong>
+<ul>
+<li>タイトルブロック（行を<code>%</code>で始める）
+<ul>
+<li>タイトル（1行目）、著者（2行目）、日付（3行目）のみ簡潔に書ける</li>
+</ul></li>
+<li>YAMLメタデータブロック（次のスライド）</li>
+</ul></li>
+</ul>
+</section>
+<section id="yamlメタデータブロック" class="slide level1">
+<h1>YAMLメタデータブロック</h1>
+<ul>
+<li>ブロックを<code>---</code>で始めて<code>...</code>で閉じる</li>
+<li>改行などの書き方は、YAMLの文法に従う
+<ul>
+<li>参考: <a href="http://magazine.rubyist.net/?0009-YAML">Rubyist Magazine - プログラマーのための YAML 入門 (初級編)</a></li>
+</ul></li>
+<li>このブロックで定義されたデータは、メタデータという種類の変数となる
+<ul>
+<li><code>-M</code>オプションで定義できるものと同じ</li>
+<li><code>-V</code>オプションで定義できるもの（テンプレート変数）とほとんど同じ（微妙に違う）</li>
+<li>メタデータは文書変換する際のオプションや制御に使うことができる
+<ul>
+<li><code>pandoc -D (出力書式の名前)</code>で、実際の使われ方がわかる</li>
+</ul></li>
+<li>このブロックを使えば、文書自体にmetadata変数を埋めこめる（便利）</li>
+</ul></li>
+</ul>
+</section>
+<section id="yamlメタデータブロックの例" class="slide level1">
+<h1>YAMLメタデータブロックの例</h1>
+<pre><code>---
+title: Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する
+author: 藤原 由来
+date: 2017年8月4日
+revealjs-url: reveal.js-3.4.0
+theme: sky-sky-y
+transition: fade
+transitionSpeed: fast
+slideNumber: true
+history: false
+margin: 0
+...</code></pre>
 </section>
 <section id="補足-markdownと標準仕様" class="slide level1">
 <h1>補足: Markdownと標準仕様</h1>
@@ -360,39 +487,20 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 <li>入力ファイル名が指定されていない場合は、標準入力を使用</li>
 </ul>
 </section>
-<section id="おまけ-pandocで作れるスライド" class="slide level1">
-<h1>おまけ: Pandocで作れるスライド</h1>
-<ul>
-<li>このスライド自体をPandocで生成しました</li>
-<li>今回は「reveal.js」形式に変換
-<ul>
-<li>HTML+JavaScriptによるプレゼンテーション</li>
-<li>クライアントサイドで完結→GitHub Pagesにアップロード可能</li>
-</ul></li>
-<li>補足: Pandocでは他のプレゼン形式にも変換できる
-<ul>
-<li>LaTeX Beamer</li>
-<li>reveal.js以外のHTMLプレゼン（割愛）</li>
-</ul></li>
-</ul>
-</section>
-<section id="実際のソースコード" class="slide level1">
-<h1>実際のソースコード</h1>
-<ul>
-<li>このスライド自体がGitHub Pagesにアップロードされています</li>
-<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc">GitHubリポジトリ</a>
-<ul>
-<li><a href="https://raw.githubusercontent.com/sky-y/libreoffice-kansai-14-pandoc/master/index.p.md">ソース (Pandoc’s Markdown)</a></li>
-<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc/blob/master/index_github.md">復習用資料 (GitHub Flavored Markdown)</a></li>
-<li><a href="https://sky-y.github.io/libreoffice-kansai-14-pandoc/">発表用スライド (HTML/reveal.js)</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="pandocでドキュメントを変換する" class="slide level1">
-<h1>Pandocでドキュメントを変換する</h1>
-<h2 id="libreoffice-writer文書を中心に">LibreOffice Writer文書を中心に</h2>
+<section id="pandocの基本的な使い方" class="slide level1">
+<h1>Pandocの基本的な使い方</h1>
 </section>
 <section id="これからやること" class="slide level1">
+<h1>これからやること</h1>
+<ul>
+<li>Markdown ↔ LibreOffice Writer の相互変換を例にします
+<ul>
+<li>他の書式に変換するときの基礎になります</li>
+<li>MS Wordを扱うときは、ほぼ同じです</li>
+</ul></li>
+</ul>
+</section>
+<section id="これからやること-1" class="slide level1">
 <h1>これからやること</h1>
 <ul>
 <li>Markdown文書からWriter文書に変換する
@@ -531,83 +639,59 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 <h1>Q&amp;A</h1>
 <h2 id="特にpandocコマンドについて">(特にPandocコマンドについて)</h2>
 </section>
-<section id="書式の自由について" class="slide level1">
-<h1>「書式の自由」について</h1>
+<section id="pandocレシピ集" class="slide level1">
+<h1>Pandocレシピ集</h1>
 </section>
-<section id="pandocも自由を愛する者の味方です" class="slide level1">
-<h1>Pandocも自由を愛する者の味方です</h1>
+<section class="slide level1">
+
 <ul>
-<li>LibreOfficeの理念
+<li>MS Word/LibreOffice Writer
 <ul>
-<li><a href="https://ja.libreoffice.org/about-us/who-are-we/">私たちは誰? | LibreOffice</a></li>
+<li>重いのでテキストファイルで下書きしたい</li>
+<li>バージョン管理をしたいけど、Word文書はGit管理が面倒</li>
 </ul></li>
-</ul>
-<blockquote>
-<p>LibreOffice は、ちょうどあなたのように、フリーソフトウェアの原理を信じ、そしてその成果を制限のない形で世界中で共有することを信じるユーザーによって開発されています。</p>
-</blockquote>
-<ul>
-<li>PandocのソースコードはGPL</li>
-</ul>
-</section>
-<section id="pandocの思想的インパクト書式の自由" class="slide level1">
-<h1>Pandocの思想的インパクト＝「書式の自由」</h1>
-<ul>
-<li>「あらゆる書式は変換できる」というメッセージ
-<ul>
-<li>現状、Excelなどは処理できないが・・・</li>
-</ul></li>
-<li>真に「書式の自由」がもたらされたとき、何が起こるか？
-<ul>
-<li>これから理想論を話します</li>
-</ul></li>
+<li>オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい</li>
+<li>MediaWiki記法で書いた原稿をSphinx(reST)で使いたい</li>
+<li>Markdownでスライドショーを作りたい</li>
+<li>電子書籍を作りたい</li>
 </ul>
 </section>
-<section id="書式の自由がもたらされたとき" class="slide level1">
-<h1>「書式の自由」がもたらされたとき</h1>
+<section id="markdownでスライドショーを作りたい" class="slide level1">
+<h1>Markdownでスライドショーを作りたい</h1>
 <ul>
-<li>各々が好きな書式やソフトで文書を作成できる</li>
-<li>それを、目的の書式に変換する
+<li>このスライド自体をPandocで生成しました</li>
+<li>今回は「reveal.js」形式に変換
 <ul>
-<li>確定申告</li>
-<li>事務手続き</li>
-<li>etc.</li>
+<li>HTML+JavaScriptによるプレゼンテーション</li>
+<li>クライアントサイドで完結→GitHub Pagesにアップロード可能</li>
 </ul></li>
-<li>適切な形式で入力・データベース化・出力できる
+<li>補足: Pandocでは他のプレゼン形式にも変換できる
 <ul>
-<li>MS Officeで入力してもいい（もちろんLibreOfficeが嬉しいけど）</li>
-<li>オープンデータの推進</li>
+<li>LaTeX Beamer</li>
+<li>reveal.js以外のHTMLプレゼン（割愛）</li>
 </ul></li>
 </ul>
 </section>
-<section id="書式の自由が与える真のインパクト" class="slide level1">
-<h1>「書式の自由」が与える真のインパクト</h1>
+<section id="実際のソースコード" class="slide level1">
+<h1>実際のソースコード</h1>
 <ul>
-<li>例：「Excel方眼紙（ネ申Excel）」の縛りから人々が解放されたら？</li>
-<li>「書式の縛り」が生んできた仕事がなくなる→雇用がなくなる
+<li>このスライド自体がGitHub Pagesにアップロードされています</li>
+<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc">GitHubリポジトリ</a>
 <ul>
-<li>いわゆるシンギュラリティの一種？</li>
-<li>例：社内の「Excel職人」がお役御免となる</li>
-<li>その人たちはどうなるのか？</li>
+<li><a href="https://raw.githubusercontent.com/sky-y/libreoffice-kansai-14-pandoc/master/index.p.md">ソース (Pandoc’s Markdown)</a></li>
+<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc/blob/master/index_github.md">復習用資料 (GitHub Flavored Markdown)</a></li>
+<li><a href="https://sky-y.github.io/libreoffice-kansai-14-pandoc/">発表用スライド (HTML/reveal.js)</a></li>
 </ul></li>
 </ul>
 </section>
-<section id="課題自由の前提として肯定と居場所が必要になる" class="slide level1">
-<h1>課題：自由の前提として「肯定」と「居場所」が必要になる</h1>
-<ul>
-<li>「仕事＝プライド」の人は、少なくないらしい
-<ul>
-<li>そのような人にとって、自由＝「何をしてもいい」という状況は虚しく息苦しい</li>
-<li>「自由からの逃走」（エーリッヒ・フロム）は起こりうる</li>
-</ul></li>
-<li>「仕事＝プライド」の人を単に非難してはいけない
-<ul>
-<li>ただ、受け入れること</li>
-<li>気軽に寄れる「居場所」をつくること</li>
-</ul></li>
-</ul>
+<section id="まとめお知らせ" class="slide level1">
+<h1>まとめ・お知らせ</h1>
 </section>
-<section id="最後に" class="slide level1">
-<h1>最後に</h1>
+<section id="今日やったこと" class="slide level1">
+<h1>今日やったこと</h1>
+<ul>
+<li>ここに書く</li>
+</ul>
 </section>
 <section id="pandocの今後の課題" class="slide level1">
 <h1>Pandocの今後の課題</h1>

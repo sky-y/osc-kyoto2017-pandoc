@@ -1,21 +1,28 @@
-# 第14回LibreOffice関西 資料（藤原） 
+# オープンソースカンファレンス2017京都 資料（藤原） 
 
-[第14回関西LibreOffice勉強会 - connpass](https://connpass.com/event/53960/)における藤原の発表資料です。
+オープンソースカンファレンス2017京都におけるセミナー発表
 
-- スライド (HTML/reveal.js): https://sky-y.github.io/libreoffice-kansai-14-pandoc/
-- スライド復習用: https://github.com/sky-y/libreoffice-kansai-14-pandoc/blob/master/index_github.md 
-- GitHubリポジトリ全体: https://github.com/sky-y/libreoffice-kansai-14-pandoc
+- [2017-08-04 (金): Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する](https://www.ospn.jp/osc2017-kyoto/modules/eguide/event.php?eid=42)」
 
-## 内容
+の発表資料です。
 
-書式の自由が社会を変える―LibreOfficeとPandocができること
+- スライド (HTML/reveal.js): <https://sky-y.github.io/osc-kyoto2017-pandoc/>
+- スライド復習用: <https://github.com/sky-y/osc-kyoto2017-pandoc/blob/master/index_github.md>
+- GitHubリポジトリ全体: <https://github.com/sky-y/osc-kyoto2017-pandoc>
 
-OSSの文書変換ツール[Pandoc](https://pandoc.org/)を使うと、Markdown/LaTeX/HTMLなどからLibreOffice Writer文書に変換したり、その逆ができます。この発表ではPandocについて、特にLibreOffice Writer文書を入力・出力文書とした場合を重点的に説明します。その上で、Pandocが示唆する「書式の自由」という概念を、LibreOfficeの理念である「自由」を参照しつつ話してみます。
+## 概要
+
+ドキュメント変換ツールPandocの入門セミナーです。
+
+Pandocにより、様々なマークアップ言語で書かれたドキュメント（Markdown, reST, LaTeX, HTMLなど）を、
+別のマークアップ言語やPDF/LibreOffice Writer/Word形式、プレゼン用スライドなどを含む多くのドキュメントに変換できます。
+また、PandocはHaskell製のOSSです。このセミナーではPandocを始めて使う人に向けて、その紹介とチュートリアルを行います。
 
 ## 連絡先
 
 - 藤原 由来
-- Twitter: [@sky_y](https://twitter.com/sky_y)
+    - Twitter（すかいゆき・藤原 惟）: [@sky_y](https://twitter.com/sky_y)
+    - メールフォーム: <https://goo.gl/forms/FPB22jv9S5NP4fpx2>
 
 ## ライセンス
 
@@ -33,3 +40,4 @@ OSSの文書変換ツール[Pandoc](https://pandoc.org/)を使うと、Markdown/
 ### その他
 
 - LICENSEファイルのあるディレクトリは、そのファイルに従います。
+- 特に指定のないディレクトリは <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンス</a> に従います。

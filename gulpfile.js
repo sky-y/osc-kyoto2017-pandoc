@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var exec = require('gulp-exec');
 var webserver = require('gulp-webserver');
+var del = require('del');
 
 var input_md = 'index.p.md';
 var output_github = 'index_github.md';
@@ -25,4 +26,9 @@ gulp.task('webserver', function() {
     }));
 });
 
-gulp.task('default', ['watch', 'webserver']);
+gulp.task('clean', function(cb) {
+  var files = [output_github, output_html];
+  del(files, cb);
+});
+
+gulp.task('default', ['pandoc', 'watch', 'webserver']);

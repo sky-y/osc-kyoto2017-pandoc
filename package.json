@@ -4,6 +4,7 @@
   "description": "My reveal.js template.",
   "main": "gulpfile.js",
   "dependencies": {
+    "del": "^3.0.0",
     "glob-stream": "^5.3.5",
     "graceful-fs": "^4.1.11",
     "gulp": "^3.9.1",
