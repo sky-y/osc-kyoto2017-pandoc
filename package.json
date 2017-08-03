@@ -1,0 +1,21 @@
+{
+  "name": "reveal-sky-y",
+  "version": "1.0.0",
+  "description": "My reveal.js template.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "glob-stream": "^5.3.5",
+    "graceful-fs": "^4.1.11",
+    "gulp": "^3.9.1",
+    "gulp-exec": "^2.1.3",
+    "gulp-webserver": "^0.9.1",
+    "minimatch": "^3.0.3",
+    "once": "^1.4.0",
+    "vinyl-fs": "^2.4.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuki Fujiwara",
+  "license": "MIT"
+}

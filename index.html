@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="藤原 由来">
+  <title>書式の自由が社会を変える―LibreOfficeとPandocができること</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js-3.4.0/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js-3.4.0/css/theme/sky-sky-y.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js-3.4.0/css/print/pdf.css' : 'reveal.js-3.4.0/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js-3.4.0/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">書式の自由が社会を変える―LibreOfficeとPandocができること</h1>
+  <p class="author">藤原 由来</p>
+  <p class="date">2017年4月29日</p>
+</section>
+
+<section id="自己紹介" class="slide level1">
+<h1>自己紹介</h1>
+<ul>
+<li>名前
+<ul>
+<li>藤原 由来 (本名, <a href="https://github.com/sky-y">GitHub</a>)</li>
+<li>藤原 惟（<a href="http://www.3rd-p-zombie.net/">ブログ</a>）</li>
+<li>すかいゆき（<a href="https://twitter.com/sky_y">Twitter</a>）</li>
+</ul></li>
+<li>職業
+<ul>
+<li>フリープログラマ</li>
+<li>専門学校 非常勤講師</li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocに関する活動" class="slide level1">
+<h1>Pandocに関する活動</h1>
+<ul>
+<li>Qiitaを中心に記事執筆
+<ul>
+<li><a href="http://qiita.com/sky_y/items/80bcd0f353ef5b8980ee">多様なフォーマットに対応！ドキュメント変換ツールPandocを知ろう - Qiita</a></li>
+</ul></li>
+<li>Pandocユーザーズガイドを和訳
+<ul>
+<li><a href="http://sky-y.github.io/site-pandoc-jp/users-guide/">Pandoc ユーザーズガイド 日本語版</a></li>
+<li>バージョンが古くなったので、改訂を予定</li>
+</ul></li>
+<li>日本Pandocユーザ会
+<ul>
+<li>最近Slack作りました: <a href="https://docs.google.com/forms/d/e/1FAIpQLScdXINuMSFlKFk9YClkDUtvZNaYFWVSiJyleYjtMVbIHqwJhA/viewform">Slack登録フォーム</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandoc公式サイト" class="slide level1">
+<h1>Pandoc公式サイト</h1>
+<ul>
+<li><a href="http://pandoc.org/index.html">Pandoc - About pandoc</a></li>
+<li>ユーザーズガイド
+<ul>
+<li><a href="http://pandoc.org/MANUAL.html">Pandoc - Pandoc User’s Guide</a></li>
+<li><a href="http://sky-y.github.io/site-pandoc-jp/users-guide/">Pandoc ユーザーズガイド 日本語版</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocと私" class="slide level1">
+<h1>Pandocと私</h1>
+<ul>
+<li>院生時代の依頼
+<ul>
+<li>従来よりLaTeXで書かれた「教育用システムの利用手引」を、EPUBにできるかどうか検証してくれないか？</li>
+<li>このとき調べ回って、「Pandocというものがあるらしい」と気づいた</li>
+</ul></li>
+<li>「LaTeXからEPUBに変換する」タスクが想像以上にあっさり実現
+<ul>
+<li>多少は難はあったが（input命令に当時は対応してない（今は対応）とか、組版がいけてないとか）</li>
+<li>この感動が、今の活動の原点</li>
+</ul></li>
+<li>なんでこんなにすごいソフトウェアが、日本では知られていなかったんだろう？
+<ul>
+<li>「Pandocを広めよう」と決意した瞬間</li>
+</ul></li>
+</ul>
+</section>
+<section id="この発表の概要" class="slide level1">
+<h1>この発表の概要</h1>
+<ul>
+<li>Pandocの概要</li>
+<li>Pandocをインストールする</li>
+<li>Pandocでドキュメントを変換する
+<ul>
+<li>LibreOffice Writer文書を中心に</li>
+</ul></li>
+<li>「書式の自由」について</li>
+</ul>
+</section>
+<section id="pandocの概要" class="slide level1">
+<h1>Pandocの概要</h1>
+</section>
+<section id="こんなことに困っていませんか" class="slide level1">
+<h1>こんなことに困っていませんか？</h1>
+<ul>
+<li>Writerが重いのでテキストファイルで下書きしたい</li>
+<li>バージョン管理をしたいけど、Writer文書は<code>git diff</code>が取りにくい</li>
+<li>Writer文書をHTMLに変換せよとお達しがあった</li>
+<li>Writer文書をSphinx(reST)で使いたい</li>
+<li>Markdownなどでスライドショーを作りたい</li>
+</ul>
+</section>
+<section id="pandocの魅力" class="slide level1">
+<h1>Pandocの魅力</h1>
+</section>
+<section id="pandocとは" class="slide level1">
+<h1>Pandocとは</h1>
+<ul>
+<li><a href="http://pandoc.org/index.html">Pandoc - About pandoc</a></li>
+<li>文書変換ツール
+<ul>
+<li>あるフォーマットで書かれた文書を、別のフォーマットに変換するツール</li>
+</ul></li>
+<li>Pandocの特徴は、対応フォーマットが非常に多いこと</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<p><a href="http://pandoc.org/diagram.jpg"><img src="figure/pandoc_diagram.jpg" style="width:15.0%" /></a></p>
+</section>
+<section id="対応フォーマット一部省略" class="slide level1">
+<h1>対応フォーマット（一部省略）</h1>
+<ul>
+<li>入力
+<ul>
+<li><strong>Markdown</strong> (Pandoc, CommonMark, PHP Markdown Extra, GitHub-Flavored Markdown, MultiMarkdown)</li>
+<li>(subsets of) Textile, <strong>reStructuredText, HTML, LaTeX, MediaWiki markup</strong>, Emacs Org mode</li>
+<li>OPML, DocBook, EPUB, <strong>ODT</strong> and Word docx</li>
+</ul></li>
+<li>出力
+<ul>
+<li>入力フォーマットのほとんど（ODT含む）</li>
+<li><strong>Markdown</strong></li>
+<li>manページ, AsciiDoc, InDesign ICML</li>
+<li><strong>プレゼンテーション</strong>: LaTeX Beamer, HTML5(reveal.jsなど)</li>
+<li>PDF (wkhtmltopdfまたはLaTeXエンジンが必要)</li>
+</ul></li>
+</ul>
+</section>
+<section id="そもそもmarkdownって何" class="slide level1">
+<h1>そもそもMarkdownって何？</h1>
+<ul>
+<li>このスライド自体が、実はMarkdownで書かれています</li>
+<li>元々は<a href="http://daringfireball.net/">John Gruberが作ったオリジナルの処理系</a> でHTMLに変換するための略記法だった</li>
+<li>そのうちGitHubやPHPなどで記法が拡張された
+<ul>
+<li>MultiMarkdownやPandocの登場をきっかけに、目的も「論文」「プレゼンテーション」「電子書籍」など用途が広がった</li>
+<li>数々の「方言」がある状態</li>
+</ul></li>
+<li>基本のMarkdownだけを覚えれば、大抵は書けます
+<ul>
+<li>プレビューを行うのが鉄則</li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocでできないこと" class="slide level1">
+<h1>Pandocでできないこと</h1>
+<ul>
+<li>表主体の文書を扱うこと
+<ul>
+<li>Excel, LibreOffice Calc</li>
+<li>一部に簡単な表を埋め込むことはできる（HTMLの<code>&lt;table&gt;</code>相当）</li>
+</ul></li>
+<li>LibreOffice Impressに/を変換すること
+<ul>
+<li>LaTeX Beamer/HTMLプレゼンには変換可能</li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocを使う心得" class="slide level1">
+<h1>Pandocを使う心得</h1>
+<ul>
+<li>過剰な期待をし過ぎないこと
+<ul>
+<li>Pandocは万能でないし、文書仕様の全てを満たしているわけではない</li>
+</ul></li>
+<li>補助的に使うのがベスト
+<ul>
+<li>Pandocで、テキストと大まかな構造を抽出</li>
+<li>変換し切れなかった部分を、手作業や自作スクリプトで編集</li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocの実装" class="slide level1">
+<h1>Pandocの実装</h1>
+<ul>
+<li>言語: Haskell
+<ul>
+<li>Pandoc的には、「厳密に型が定義されている」ことがありがたい</li>
+<li>Haskellは構文解析器(パーサ)を作るのにすごく適している (Parsecなど)</li>
+</ul></li>
+<li>モジュール構成
+<ul>
+<li>Reader: 入力文書を解析し、Haskell上の中間文書に変換する</li>
+<li>Writer: 中間文書を受け取り、出力フォーマットに変換する</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<figure>
+<img src="figure/pandoc_block.jpg" alt="Pandocの処理フロー" /><figcaption>Pandocの処理フロー</figcaption>
+</figure>
+</section>
+<section id="pandocが扱えるmarkdown方言" class="slide level1">
+<h1>Pandocが扱えるMarkdown方言</h1>
+<ul>
+<li>Pandoc’s Markdown: <code>-f markdown</code>
+<ul>
+<li>Pandocにおける標準のMarkdown方言</li>
+<li>技術文書から論文・電子書籍まで幅広く対応</li>
+</ul></li>
+<li>GitHub Flavored Markdown (gfm): <code>-f markdown_github</code>
+<ul>
+<li>GitHubの標準、プログラマ・フレンドリーな方言</li>
+</ul></li>
+<li>PHP Markdown Extra: <code>-f markdown_phpextra</code>
+<ul>
+<li>最近はMarkdown Extraとも呼ばれる</li>
+</ul></li>
+<li>MultiMarkdown: <code>-f markdown_mmd</code>
+<ul>
+<li>HTMLだけでなくLaTeXなどの論文も意図した処理系</li>
+</ul></li>
+<li>CommonMark: <code>-f commonmark</code>
+<ul>
+<li>仕様の曖昧さをなくすことを目的とした仕様/処理系</li>
+<li>ここ最近は、事実上の標準に近づく（公式な標準ではない）</li>
+</ul></li>
+</ul>
+</section>
+<section id="補足-markdownと標準仕様" class="slide level1">
+<h1>補足: Markdownと標準仕様</h1>
+<ul>
+<li>RFC
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc7763">RFC 7763 - The text/markdown Media Type</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7764">RFC 7764 - Guidance on Markdown: Design Philosophies, Stability Strategies, and Select Registrations</a></li>
+</ul></li>
+<li>RFCでも方言は統一できなかった
+<ul>
+<li>代わりに、Media Typeにて「Markdownであること」と「方言の名前」を明示する方法を定めた</li>
+<li>参考: <a href="http://tk0miya.hatenablog.com/entry/2016/12/30/205418" class="uri">http://tk0miya.hatenablog.com/entry/2016/12/30/205418</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocをインストールする" class="slide level1">
+<h1>Pandocをインストールする</h1>
+</section>
+<section id="ターミナルを開く" class="slide level1">
+<h1>ターミナルを開く</h1>
+<ul>
+<li>Mac: ターミナル.app or iTerm2</li>
+<li>Windows: (今回は)コマンドプロンプト
+<ul>
+<li>(分かっている方は)お好きなターミナルでも結構です</li>
+</ul></li>
+<li>Linux: お好きなターミナル</li>
+</ul>
+</section>
+<section id="pandocのインストール-パッケージマネージャ編" class="slide level1">
+<h1>Pandocのインストール: パッケージマネージャ編</h1>
+<ul>
+<li>原則として、Haskell処理系は不要です</li>
+<li>Mac(<a href="http://brew.sh/index_ja.html">Homebrew</a>)
+<ul>
+<li><code>$ brew install pandoc</code></li>
+</ul></li>
+<li>Windows(<a href="https://chocolatey.org/">Chocolatey</a>)
+<ul>
+<li><code>&gt; cinst -y pandoc</code></li>
+</ul></li>
+<li>Linux
+<ul>
+<li>バージョンが古いことがあるので注意</li>
+<li>Debian: <code>$ sudo apt-get install pandoc</code></li>
+<li>CentOS: <a href="http://qiita.com/fk_2000/items/2ea57ea36b523c0cae5a">pandocをCentOS7にインストール - Qiita</a> を参照</li>
+<li>ソースコード: <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>(Haskellビルドツール)が必要
+<ul>
+<li><a href="https://github.com/jgm/pandoc">GitHub - jgm/pandoc: Universal markup converter</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocのインストール-インストーラ編" class="slide level1">
+<h1>Pandocのインストール: インストーラ編</h1>
+<ul>
+<li>パッケージを直接落としてインストール
+<ol type="1">
+<li><a href="https://github.com/jgm/pandoc/releases/latest">ここからパッケージをダウンロード</a>
+<ul>
+<li>Windows: <code>.msi</code>, Mac: <code>.pkg</code></li>
+</ul></li>
+<li>インストール</li>
+</ol></li>
+</ul>
+</section>
+<section id="wkhtmltopdfのインストール" class="slide level1">
+<h1>wkhtmltopdfのインストール</h1>
+<ul>
+<li>PDF出力のために必要
+<ul>
+<li>TeXLive/MacTeXを入れていれば、LaTeX処理系も利用可能（説明略）</li>
+<li>ただし、pLaTeXはNGなので、LuaLaTeX/XeLaTeXのみ</li>
+</ul></li>
+<li>パッケージマネージャでインストール
+<ul>
+<li>Mac: <code>$ brew cask install wkhtmltopdf</code>
+<ul>
+<li>Caskの方なので注意</li>
+</ul></li>
+<li>Windows: <code>&gt; cinst -y wkhtmltopdf</code></li>
+<li>Debian: <code>$ sudo apt-get install wkhtmltopdf</code></li>
+</ul></li>
+<li>パッケージを直接落としてインストール
+<ol type="1">
+<li><a href="http://wkhtmltopdf.org/downloads.html">wkhtmltopdf - Downloads</a>からダウンロード</li>
+<li>インストール</li>
+</ol></li>
+</ul>
+</section>
+<section id="動作確認-pandoc単体" class="slide level1">
+<h1>動作確認: Pandoc単体</h1>
+<p>Bashにて確認（コマンドプロンプトも同様のはず）</p>
+<pre><code>$ pandoc --version
+$ pandoc --list-input-formats
+$ pandoc --list-output-formats
+$ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
+&lt;p&gt;&lt;strong&gt;Hello&lt;/strong&gt;&lt;/p&gt;</code></pre>
+</section>
+<section id="動作確認-pandoc-wkhtmltopdf-pdf" class="slide level1">
+<h1>動作確認: Pandoc + wkhtmltopdf (PDF)</h1>
+<pre><code>$ echo &quot;**Hello**&quot; | pandoc -f markdown -t html5 -o hello.pdf</code></pre>
+<ul>
+<li><code>-f</code>: 入力フォーマット名</li>
+<li><code>-t</code>: 出力フォーマット名</li>
+<li><code>-o</code>: 出力ファイル名</li>
+<li>入力ファイル名が指定されていない場合は、標準入力を使用</li>
+</ul>
+</section>
+<section id="おまけ-pandocで作れるスライド" class="slide level1">
+<h1>おまけ: Pandocで作れるスライド</h1>
+<ul>
+<li>このスライド自体をPandocで生成しました</li>
+<li>今回は「reveal.js」形式に変換
+<ul>
+<li>HTML+JavaScriptによるプレゼンテーション</li>
+<li>クライアントサイドで完結→GitHub Pagesにアップロード可能</li>
+</ul></li>
+<li>補足: Pandocでは他のプレゼン形式にも変換できる
+<ul>
+<li>LaTeX Beamer</li>
+<li>reveal.js以外のHTMLプレゼン（割愛）</li>
+</ul></li>
+</ul>
+</section>
+<section id="実際のソースコード" class="slide level1">
+<h1>実際のソースコード</h1>
+<ul>
+<li>このスライド自体がGitHub Pagesにアップロードされています</li>
+<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc">GitHubリポジトリ</a>
+<ul>
+<li><a href="https://raw.githubusercontent.com/sky-y/libreoffice-kansai-14-pandoc/master/index.p.md">ソース (Pandoc’s Markdown)</a></li>
+<li><a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc/blob/master/index_github.md">復習用資料 (GitHub Flavored Markdown)</a></li>
+<li><a href="https://sky-y.github.io/libreoffice-kansai-14-pandoc/">発表用スライド (HTML/reveal.js)</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocでドキュメントを変換する" class="slide level1">
+<h1>Pandocでドキュメントを変換する</h1>
+<h2 id="libreoffice-writer文書を中心に">LibreOffice Writer文書を中心に</h2>
+</section>
+<section id="これからやること" class="slide level1">
+<h1>これからやること</h1>
+<ul>
+<li>Markdown文書からWriter文書に変換する
+<ul>
+<li>とりあえず変換してみる</li>
+<li>綺麗なWriter文書を生成する: テンプレート機能</li>
+</ul></li>
+<li>Writer文書をMarkdownに変換する</li>
+<li>以下の作業では、<a href="https://github.com/sky-y/libreoffice-kansai-14-pandoc">GitHubリポジトリ</a>のsampleディレクトリにあるファイルを使います
+<ul>
+<li>興味のある人はgit cloneして試してみてください</li>
+</ul></li>
+</ul>
+</section>
+<section id="とりあえず変換してみる-pandocコマンド" class="slide level1">
+<h1>とりあえず変換してみる: pandocコマンド</h1>
+<pre><code>$ pandoc connpass.md -o connpass.odt</code></pre>
+<ul>
+<li><code>-o</code>: 出力ファイル名
+<ul>
+<li>多くの場合拡張子で判断できる</li>
+</ul></li>
+</ul>
+</section>
+<section id="ファイルを開く" class="slide level1">
+<h1>ファイルを開く</h1>
+<pre><code>$ open connpass.odt    # Mac/Linux
+&gt; start connpass.odt   # Windows</code></pre>
+</section>
+<section id="綺麗なwriter文書を生成する" class="slide level1">
+<h1>綺麗なWriter文書を生成する</h1>
+<ul>
+<li>Pandocのテンプレート機能を使う
+<ul>
+<li><ol type="1">
+<li>Pandocコマンドからテンプレートを生成</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>テンプレートをWriterで編集する</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Pandocの変換時にテンプレートをオプションで指定する</li>
+</ol>
+<ul>
+<li>もしくはユーザデータディレクトリに入れる</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="pandocコマンドからテンプレートを生成" class="slide level1">
+<h1>(1) Pandocコマンドからテンプレートを生成</h1>
+<pre><code>$ pandoc --print-default-data-file reference.odt &gt; reference.odt</code></pre>
+<ul>
+<li>コマンドオプションで指定する場合は「reference.odt」という名前でなくてよい</li>
+<li>ユーザデータディレクトリ(後述)に入れる場合は必ず「reference.odt」という名前にする</li>
+</ul>
+</section>
+<section id="テンプレートをwriterで編集する" class="slide level1">
+<h1>(2) テンプレートをWriterで編集する</h1>
+<ul>
+<li>reference.odtを開く</li>
+<li>内容はPandocから参照されない
+<ul>
+<li>デフォルトで「Hello World!」と表示されている</li>
+<li>例えば表示用サンプルを置いてもいい</li>
+</ul></li>
+<li>「スタイルと書式設定」から書式を変更</li>
+</ul>
+<figure>
+<img src="figure/style-and-format.png" style="width:50.0%" />
+</figure>
+</section>
+<section id="pandocの変換時にテンプレートをオプションで指定する" class="slide level1">
+<h1>(3) Pandocの変換時にテンプレートをオプションで指定する</h1>
+<pre><code>$ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt</code></pre>
+<ul>
+<li><code>--reference-doc</code>: Writer(やWordなど)のテンプレートを指定 (v2.0)
+<ul>
+<li>注意: 以前は <code>--reference-odt</code> というオプションだった</li>
+</ul></li>
+</ul>
+</section>
+<section id="補足テンプレートをユーザデータディレクトリに入れる" class="slide level1">
+<h1>補足：テンプレートをユーザデータディレクトリに入れる</h1>
+<ul>
+<li>ユーザデータディレクトリの場所: <code>pandoc -v</code> で出る
+<ul>
+<li>Windows: <code>C:\Users\ユーザ名\AppData\Roaming\pandoc</code></li>
+<li>Mac: <code>$HOME/.pandoc</code></li>
+</ul></li>
+<li>このディレクトリに「reference.odt」という名前でテンプレートを入れると、次回からデフォルトで使ってくれる</li>
+</ul>
+</section>
+<section id="pandocとwriterの具体的なノウハウ-nogajunさん" class="slide level1">
+<h1>PandocとWriterの具体的なノウハウ (nogajunさん)</h1>
+<ul>
+<li><a href="http://www.nofuture.tv/diary/20141206.html">PandocとLibreOffice WriterでiDエディタのマニュアルを製本する, どうしてこうなった - Days of Speed(2014-12-06)</a>
+<ul>
+<li><a href="https://github.com/nogajun/pandoc-writer">nogajun/pandoc-writer</a>の<code>pandoc-writer.odt</code>がテンプレートとして使える</li>
+</ul></li>
+</ul>
+<pre><code>$ pandoc connpass.md --reference-doc=pandoc-writer.odt -o connpass-pandoc-writer.odt</code></pre>
+</section>
+<section id="画像に関するノウハウ-いくやさん" class="slide level1">
+<h1>画像に関するノウハウ (いくやさん)</h1>
+<ul>
+<li><a href="http://blog.goo.ne.jp/ikunya/e/826e6916307159c87afde0fe23c5e1e4">PandocでMarkdownをODTに変換する - いくやの斬鉄日記</a>
+<ul>
+<li>画像のサイズを整える (ImageMagickの<code>mogrify</code>コマンド)</li>
+<li>画像のDPIを変更する (同上)</li>
+</ul></li>
+</ul>
+</section>
+<section id="writer文書からmarkdownrestlatex文書に変換してみる" class="slide level1">
+<h1>Writer文書からMarkdown/reST/LaTeX文書に変換してみる</h1>
+<ul>
+<li>nogajunさんの<code>pandoc-writer.odt</code>を変換してみる</li>
+<li>Markdown (Pandoc’s)
+<ul>
+<li><code>$ pandoc pandoc-writer.odt -o pandoc-writer.md</code></li>
+</ul></li>
+<li>reStructuredText (Sphinxなどで使用)
+<ul>
+<li><code>$ pandoc pandoc-writer.odt -o pandoc-writer.rst</code></li>
+</ul></li>
+<li>LaTeX
+<ul>
+<li>デフォルトはLuaLaTeX/XeLaTeXが必要なので注意</li>
+<li>詳細: <a href="http://d.hatena.ne.jp/zrbabbler/20160228/1456622107">BXjscls がまた新しくなった（v1.1a） - マクロツイーター</a></li>
+<li><code>$ pandoc -s pandoc-writer.odt -o pandoc-writer.tex</code></li>
+<li><code>-s</code>: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)</li>
+</ul></li>
+</ul>
+</section>
+<section id="qa" class="slide level1">
+<h1>Q&amp;A</h1>
+<h2 id="特にpandocコマンドについて">(特にPandocコマンドについて)</h2>
+</section>
+<section id="書式の自由について" class="slide level1">
+<h1>「書式の自由」について</h1>
+</section>
+<section id="pandocも自由を愛する者の味方です" class="slide level1">
+<h1>Pandocも自由を愛する者の味方です</h1>
+<ul>
+<li>LibreOfficeの理念
+<ul>
+<li><a href="https://ja.libreoffice.org/about-us/who-are-we/">私たちは誰? | LibreOffice</a></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>LibreOffice は、ちょうどあなたのように、フリーソフトウェアの原理を信じ、そしてその成果を制限のない形で世界中で共有することを信じるユーザーによって開発されています。</p>
+</blockquote>
+<ul>
+<li>PandocのソースコードはGPL</li>
+</ul>
+</section>
+<section id="pandocの思想的インパクト書式の自由" class="slide level1">
+<h1>Pandocの思想的インパクト＝「書式の自由」</h1>
+<ul>
+<li>「あらゆる書式は変換できる」というメッセージ
+<ul>
+<li>現状、Excelなどは処理できないが・・・</li>
+</ul></li>
+<li>真に「書式の自由」がもたらされたとき、何が起こるか？
+<ul>
+<li>これから理想論を話します</li>
+</ul></li>
+</ul>
+</section>
+<section id="書式の自由がもたらされたとき" class="slide level1">
+<h1>「書式の自由」がもたらされたとき</h1>
+<ul>
+<li>各々が好きな書式やソフトで文書を作成できる</li>
+<li>それを、目的の書式に変換する
+<ul>
+<li>確定申告</li>
+<li>事務手続き</li>
+<li>etc.</li>
+</ul></li>
+<li>適切な形式で入力・データベース化・出力できる
+<ul>
+<li>MS Officeで入力してもいい（もちろんLibreOfficeが嬉しいけど）</li>
+<li>オープンデータの推進</li>
+</ul></li>
+</ul>
+</section>
+<section id="書式の自由が与える真のインパクト" class="slide level1">
+<h1>「書式の自由」が与える真のインパクト</h1>
+<ul>
+<li>例：「Excel方眼紙（ネ申Excel）」の縛りから人々が解放されたら？</li>
+<li>「書式の縛り」が生んできた仕事がなくなる→雇用がなくなる
+<ul>
+<li>いわゆるシンギュラリティの一種？</li>
+<li>例：社内の「Excel職人」がお役御免となる</li>
+<li>その人たちはどうなるのか？</li>
+</ul></li>
+</ul>
+</section>
+<section id="課題自由の前提として肯定と居場所が必要になる" class="slide level1">
+<h1>課題：自由の前提として「肯定」と「居場所」が必要になる</h1>
+<ul>
+<li>「仕事＝プライド」の人は、少なくないらしい
+<ul>
+<li>そのような人にとって、自由＝「何をしてもいい」という状況は虚しく息苦しい</li>
+<li>「自由からの逃走」（エーリッヒ・フロム）は起こりうる</li>
+</ul></li>
+<li>「仕事＝プライド」の人を単に非難してはいけない
+<ul>
+<li>ただ、受け入れること</li>
+<li>気軽に寄れる「居場所」をつくること</li>
+</ul></li>
+</ul>
+</section>
+<section id="最後に" class="slide level1">
+<h1>最後に</h1>
+</section>
+<section id="pandocの今後の課題" class="slide level1">
+<h1>Pandocの今後の課題</h1>
+<ul>
+<li>日本語に特化した文書フォーマットにほとんど対応していない
+<ul>
+<li>書籍におけるルビや圏点など</li>
+<li>日本語コミュニティの必要性</li>
+</ul></li>
+<li>表形式の文書は対応していない
+<ul>
+<li>Excel文書など→Excel方眼紙への対策には致命的</li>
+<li>サードパーティのプリプロセッサにより部分的に変換する手段はある
+<ul>
+<li>一部の図表（Graphvizなど）はこの方法で取り込むことができる</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="日本pandocユーザ会" class="slide level1">
+<h1>日本Pandocユーザ会</h1>
+<ul>
+<li>Webサイトはリニューアル予定</li>
+<li>Slackを始めました
+<ul>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLScdXINuMSFlKFk9YClkDUtvZNaYFWVSiJyleYjtMVbIHqwJhA/viewform">Slack登録フォーム</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="ドキュメンテーションwiki" class="slide level1">
+<h1>ドキュメンテーションWiki</h1>
+<ul>
+<li><a href="https://github.com/doc-wiki-jp/wiki/wiki">ドキュメンテーションWiki (GitHub)</a></li>
+<li>誰でも編集歓迎します（要GitHubアカウント）</li>
+<li>特にLibreOffice関連の記事が不足しています</li>
+</ul>
+</section>
+<section id="qa-1" class="slide level1">
+<h1>Q&amp;A</h1>
+<ul>
+<li>連絡先
+<ul>
+<li><a href="mailto:sky.y.0079@gmail.com">sky.y.0079@gmail.com</a></li>
+<li>Twitter: <span class="citation" data-cites="sky_y">[@sky_y]</span>(https://twitter.com/sky_y)</li>
+</ul></li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js-3.4.0/lib/js/head.min.js"></script>
+  <script src="reveal.js-3.4.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'fast', // default/fast/slow
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js-3.4.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js-3.4.0/plugin/zoom-js/zoom.js', async: true },
+              { src: 'reveal.js-3.4.0/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
