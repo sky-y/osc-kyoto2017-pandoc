@@ -135,7 +135,7 @@ height: 720
 - MS Word/LibreOffice Writer
     - 重いのでテキストファイルで下書きしたい
     - バージョン管理をしたいけど、Word文書はGit管理が面倒
-- オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい
+- オフィスにある大量の文書を別の書式に変換したい
 - MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
 - Markdownでスライドショーを作りたい
 
@@ -156,7 +156,7 @@ height: 720
 
 ----
 
-[![](figure/pandoc-diagram_h800.jpg){ width=15% }](http://pandoc.org/diagram.jpg)
+![Pandocの処理フロー](figure/pandoc_block.jpg){ width=60% }
 
 ----
 
@@ -172,6 +172,10 @@ height: 720
     - manページ,  AsciiDoc, InDesign ICML
     - **プレゼンテーション**: LaTeX Beamer, HTML5(reveal.jsなど)
     - PDF (wkhtmltopdfまたはLaTeXエンジンが必要)
+
+----
+
+[![](figure/pandoc-diagram_h800.jpg){ height=500px }](http://pandoc.org/diagram.jpg)
 
 ----
 
@@ -220,7 +224,7 @@ height: 720
 
 ----
 
-![Pandocの処理フロー](figure/pandoc_block.jpg)
+![Pandocの処理フロー（詳細）](figure/pandoc_block2.jpg){ width=80% }
 
 ----
 
@@ -373,6 +377,22 @@ $ echo "**Hello**" | pandoc -f markdown -t html
 
 ----
 
+# 動作確認1: Pandoc単体
+
+```
+$ echo "**Hello**" | pandoc -f markdown -t html
+```
+
+- シェルの**パイプ**機能を使っています
+    - `echo`が出す標準出力をパイプ (`|`)で`pandoc`の標準入力に渡す
+    - `pandoc`は入力・出力ファイル名が与えられてない場合、標準入力・標準出力を使う
+- `-f`: 入力フォーマット名 (from)
+    - 使えるフォーマット名は `pandoc --list-input-formats` で確認できる
+- `-t`: 出力フォーマット名 (to)
+    - 使えるフォーマット名は `pandoc --list-output-formats` で確認できる
+
+----
+
 # 動作確認2: ファイルを入力
 
 - 次の内容をテキストファイルで保存し、「hello.md」と保存する
@@ -407,9 +427,7 @@ $ echo "**Hello**" | pandoc -f markdown -t html5 -o hello.pdf
 ```
 
 - `-f`: 入力フォーマット名 (from)
-    - 使えるフォーマット名は `pandoc --list-input-formats` で確認できる
 - `-t`: 出力フォーマット名 (to)
-    - 使えるフォーマット名は `pandoc --list-output-formats` で確認できる
     - 注意: wkhtmltopdfでPDFを出すときは `-t html5`を指定
         - 内部で文字通り、HTML5に変換してからPDFに出すので
 - `-o`: 出力ファイル名 (output)
@@ -503,12 +521,13 @@ $ pandoc --print-default-data-file reference.odt > reference.odt
 
 - `--reference-odt`: Pandoc 2.xの指定
 - `--reference-doc`: Pandoc 1.xの指定
-- `pandoc -h`にあるコマンドが使えます
-    - UNIX系なら `pandoc -h | grep 'reference'` で分かるはず
+- バージョンは `pandoc -v` で分かります
+- 実際に使えるコマンドは `pandoc -h`で分かります
+    - UNIX系なら `pandoc -h | grep 'reference'` で絞れるはず
 
 ```
-$ pandoc connpass.md --reference-odt=reference.odt -o connpass2.odt
-$ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt
+$ pandoc connpass.md --reference-odt=reference.odt -o atarashii_kenpo.odt
+$ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 ```
 
 ----
@@ -563,24 +582,55 @@ $ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt
 
 ----
 
-- MS Word/LibreOffice Writer
-    - 重いのでテキストファイルで下書きしたい
-    - バージョン管理をしたいけど、Word文書はGit管理が面倒
-- オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい
+# Pandocレシピ集
+
+- オフィスにある大量の文書を別の書式に変換したい
 - MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
 - Markdownでスライドショーを作りたい
 
 ----
 
+# オフィスにある大量の文書を別の書式に変換したい
+
+処理したいファイルが大量にある場合は、スクリプトにPandocを組み込みます。
+
+1. 下準備: 他のツールなどで、なんとかしてPandocが処理できる書式に変換する
+    - おすすめ: HTML（多くのツールでエクスポートできるので）
+2. Pandocをスクリプトの中で使う
+    - シェルスクリプトで直接使う
+    - スクリプト言語の外部コマンド機能で呼ぶ
+    - スクリプト言語のライブラリから呼ぶ（古い場合があるので注意）
+
+----
+
+# MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
+
+- MediaWiki: WikipediaなどのベースにあるWikiシステム
+    - 拡張子は知らなかったので適当です（すみません）
+- Sphinx: HTMLによる一式のドキュメンテーションサイトを作るツール
+
+```
+$ pandoc input.wiki -f mediawiki -t rst -o output.rst
+```
+
+- Pandocはドキュメンテーションシステムの引越に使える（かも？）
+
+----
+
 # Markdownでスライドショーを作りたい
 
-- このスライド自体をPandocで生成しました
-- 今回は「reveal.js」形式に変換
-    - HTML+JavaScriptによるプレゼンテーション
-    - クライアントサイドで完結→GitHub Pagesにアップロード可能
-- コマンド例（実際のソースコードは次スライド）
+このスライド自体をPandocで生成しました
+
+- [Pandoc's Markdown](http://pandoc.org/MANUAL.html#pandocs-markdown)の書式に従って原稿を書く
+    - もちろんこれ以外の書式でも、Pandocが対応していれば書けます
+- Pandocで変換する
+    - 今回は「reveal.js」形式（HTML+JavaScriptによるプレゼン）に変換
     - `$ pandoc input.p.md -s -f markdown -t revealjs -o index.html`
-    - `-s`: standalone (ヘッダ・フッタの付いた完全な文書を出力)
+        - 実際のファイルは次スライドで
+        - `-s`: standalone (ヘッダ・フッタの付いた完全な文書を出力)
+- アップロードする
+    - [GitHub Pages](https://pages.github.com/)を使うと、直接GitHubにpushすればアップロードできます
+        - この場合は、`.nojekyll`という空ファイルを置かないと、404エラーになるので注意
 - その他 LaTeX Beamer にも変換できます
 
 ----
@@ -608,6 +658,26 @@ $ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt
     - Pandocに対応する好きな記法で原稿を書く
     - `pandoc -t markdown_phpextra`ででんでんマークダウン向けに変換
     - [でんでんエディター](https://edit.denshochan.com/)にペーストして仕上げる
+
+----
+
+# Pandocの高度な使い方（ごく簡潔に）
+
+----
+
+# フィルタ機能
+
+- 中間文書をJSON形式に出す
+- それを外部スクリプトが標準入力で受け取り処理する
+- それを標準出力に出して、Pandocに戻す
+
+![Pandocの処理フロー（フィルタ付き）](figure/pandoc_block3.jpg){ width=80% }
+
+----
+
+# フィルタ機能ができること
+
+- 
 
 ----
 
@@ -653,4 +723,4 @@ $ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt
 
 - 連絡先
     - <sky.y.0079@gmail.com>
-    - Twitter: [@sky_y](https://twitter.com/sky_y)
+    - Twitter: [すかいゆき・藤原 惟 \@sky_y](https://twitter.com/sky_y)

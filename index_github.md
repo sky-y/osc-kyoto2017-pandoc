@@ -132,10 +132,9 @@ Pandocの概要
 -   MS Word/LibreOffice Writer
     -   重いのでテキストファイルで下書きしたい
     -   バージョン管理をしたいけど、Word文書はGit管理が面倒
--   オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい
+-   オフィスにある大量の文書を別の書式に変換したい
 -   MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
 -   Markdownでスライドショーを作りたい
--   Markdownで電子書籍(EPUB)を作りたい
 
 ------------------------------------------------------------------------
 
@@ -154,7 +153,7 @@ Pandocとは
 
 ------------------------------------------------------------------------
 
-[<img src="figure/pandoc-diagram_h800.jpg" style="width:15.0%" />](http://pandoc.org/diagram.jpg)
+<img src="figure/pandoc_block.jpg" alt="Pandocの処理フロー" style="width:60.0%" />
 
 ------------------------------------------------------------------------
 
@@ -171,6 +170,10 @@ Pandocとは
     -   manページ, AsciiDoc, InDesign ICML
     -   **プレゼンテーション**: LaTeX Beamer, HTML5(reveal.jsなど)
     -   PDF (wkhtmltopdfまたはLaTeXエンジンが必要)
+
+------------------------------------------------------------------------
+
+[<img src="figure/pandoc-diagram_h800.jpg" height="500" />](http://pandoc.org/diagram.jpg)
 
 ------------------------------------------------------------------------
 
@@ -223,7 +226,7 @@ Pandocの実装
 
 ------------------------------------------------------------------------
 
-![Pandocの処理フロー](figure/pandoc_block.jpg)
+<img src="figure/pandoc_block2.jpg" alt="Pandocの処理フロー（詳細）" style="width:80.0%" />
 
 ------------------------------------------------------------------------
 
@@ -384,6 +387,21 @@ wkhtmltopdfのインストール
 
 ------------------------------------------------------------------------
 
+動作確認1: Pandoc単体
+=====================
+
+    $ echo "**Hello**" | pandoc -f markdown -t html
+
+-   シェルの**パイプ**機能を使っています
+    -   `echo`が出す標準出力をパイプ (`|`)で`pandoc`の標準入力に渡す
+    -   `pandoc`は入力・出力ファイル名が与えられてない場合、標準入力・標準出力を使う
+-   `-f`: 入力フォーマット名 (from)
+    -   使えるフォーマット名は `pandoc --list-input-formats` で確認できる
+-   `-t`: 出力フォーマット名 (to)
+    -   使えるフォーマット名は `pandoc --list-output-formats` で確認できる
+
+------------------------------------------------------------------------
+
 動作確認2: ファイルを入力
 =========================
 
@@ -419,9 +437,7 @@ wkhtmltopdfのインストール
     $ echo "**Hello**" | pandoc -f markdown -t html5 -o hello.pdf
 
 -   `-f`: 入力フォーマット名 (from)
-    -   使えるフォーマット名は `pandoc --list-input-formats` で確認できる
 -   `-t`: 出力フォーマット名 (to)
-    -   使えるフォーマット名は `pandoc --list-output-formats` で確認できる
     -   注意: wkhtmltopdfでPDFを出すときは `-t html5`を指定
         -   内部で文字通り、HTML5に変換してからPDFに出すので
 -   `-o`: 出力ファイル名 (output)
@@ -448,17 +464,18 @@ Pandocの基本的な使い方
 
 -   Markdown文書からWriter文書に変換する
     -   とりあえず変換してみる
-    -   綺麗なWriter文書を生成する: テンプレート機能
+    -   綺麗なWriter文書を生成する: reference機能
 -   Writer文書をMarkdownに変換する
--   以下の作業では、[GitHubリポジトリ](https://github.com/sky-y/libreoffice-kansai-14-pandoc)のsampleディレクトリにあるファイルを使います
-    -   興味のある人はgit cloneして試してみてください
+-   以下の作業では、[GitHubリポジトリ](https://github.com/sky-y/osc-kyoto2017-pandoc)のsampleディレクトリにあるファイルを使います
+-   atarashii\_kenpo.md: [あたらしい憲法のはなし(Markdown版)](https://github.com/nogajun/story_of_the_new_constitution)より
+    -   nogajunさん編、Public Domain
 
 ------------------------------------------------------------------------
 
 とりあえず変換してみる: pandocコマンド
 ======================================
 
-    $ pandoc connpass.md -o connpass.odt
+    $ pandoc atarashii_kempo.md -o atarashii_kempo.odt
 
 -   `-o`: 出力ファイル名
     -   多くの場合拡張子で判断できる
@@ -468,27 +485,30 @@ Pandocの基本的な使い方
 ファイルを開く
 ==============
 
-    $ open connpass.odt    # Mac/Linux
-    > start connpass.odt   # Windows
+    $ open atarashii_kempo.odt      # Mac
+    $ xdg-open atarashii_kempo.odt  # Linux (GNOME, KDE, Xfce)
+    > start atarashii_kempo.odt     # Windows
 
 ------------------------------------------------------------------------
 
 綺麗なWriter文書を生成する
 ==========================
 
--   Pandocのテンプレート機能を使う
-    -   1.  Pandocコマンドからテンプレートを生成
+-   Pandocのreference機能を使う
+    -   1.  Pandocコマンドからreferenceファイルを生成
 
-    -   1.  テンプレートをWriterで編集する
+    -   1.  reference.odtをWriterで編集する
 
-    -   1.  Pandocの変換時にテンプレートをオプションで指定する
+    -   1.  Pandocの変換時にreference.odtをオプションで指定する
 
         -   もしくはユーザデータディレクトリに入れる
 
+-   Wordの場合は、「odt」を「docx」に読み替えると同様にできます
+
 ------------------------------------------------------------------------
 
-(1) Pandocコマンドからテンプレートを生成
-========================================
+(1) Pandocコマンドからreferenceファイルを生成
+=============================================
 
     $ pandoc --print-default-data-file reference.odt > reference.odt
 
@@ -497,12 +517,12 @@ Pandocの基本的な使い方
 
 ------------------------------------------------------------------------
 
-(2) テンプレートをWriterで編集する
-==================================
+(2) reference.odtをWriterで編集する
+===================================
 
--   reference.odtを開く
--   内容はPandocから参照されない
-    -   デフォルトで「Hello World!」と表示されている
+-   reference.odtをLibreOfficeで開く
+-   reference.odtの内容はPandocから参照されない
+    -   デフォルトで「Hello World!」と表示されている部分のこと
     -   例えば表示用サンプルを置いてもいい
 -   「スタイルと書式設定」から書式を変更
 
@@ -513,15 +533,23 @@ Pandocの基本的な使い方
 (3) Pandocの変換時にテンプレートをオプションで指定する
 ======================================================
 
-    $ pandoc connpass.md --reference-doc=reference.odt -o connpass2.odt
+注意: バージョンによって使用するオプションが違います
 
--   `--reference-doc`: Writer(やWordなど)のテンプレートを指定 (v2.0)
-    -   注意: 以前は `--reference-odt` というオプションだった
+-   `--reference-odt`: Pandoc 2.xの指定
+-   `--reference-doc`: Pandoc 1.xの指定
+-   バージョンは `pandoc -v` で分かります
+-   実際に使えるコマンドは `pandoc -h`で分かります
+    -   UNIX系なら `pandoc -h | grep 'reference'` で絞れるはず
+
+<!-- -->
+
+    $ pandoc connpass.md --reference-odt=reference.odt -o atarashii_kenpo.odt
+    $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 
 ------------------------------------------------------------------------
 
-補足：テンプレートをユーザデータディレクトリに入れる
-====================================================
+補足: reference.odtをユーザデータディレクトリに入れる
+=====================================================
 
 -   ユーザデータディレクトリの場所: `pandoc -v` で出る
     -   Windows: `C:\Users\ユーザ名\AppData\Roaming\pandoc`
@@ -530,38 +558,35 @@ Pandocの基本的な使い方
 
 ------------------------------------------------------------------------
 
-PandocとWriterの具体的なノウハウ (nogajunさん)
-==============================================
+具体的なノウハウ
+================
 
--   [PandocとLibreOffice WriterでiDエディタのマニュアルを製本する, どうしてこうなった - Days of Speed(2014-12-06)](http://www.nofuture.tv/diary/20141206.html)
+-   nogajunさん: [PandocとLibreOffice WriterでiDエディタのマニュアルを製本する, どうしてこうなった - Days of Speed(2014-12-06)](http://www.nofuture.tv/diary/20141206.html)
     -   [nogajun/pandoc-writer](https://github.com/nogajun/pandoc-writer)の`pandoc-writer.odt`がテンプレートとして使える
-
-<!-- -->
-
-    $ pandoc connpass.md --reference-doc=pandoc-writer.odt -o connpass-pandoc-writer.odt
-
-------------------------------------------------------------------------
-
-画像に関するノウハウ (いくやさん)
-=================================
-
--   [PandocでMarkdownをODTに変換する - いくやの斬鉄日記](http://blog.goo.ne.jp/ikunya/e/826e6916307159c87afde0fe23c5e1e4)
+-   いくやさん: [PandocでMarkdownをODTに変換する - いくやの斬鉄日記](http://blog.goo.ne.jp/ikunya/e/826e6916307159c87afde0fe23c5e1e4)
     -   画像のサイズを整える (ImageMagickの`mogrify`コマンド)
     -   画像のDPIを変更する (同上)
 
 ------------------------------------------------------------------------
 
-Writer文書からMarkdown/reST/LaTeX文書に変換してみる
-===================================================
+Writer文書からMarkdown/reST文書に変換してみる
+=============================================
 
 -   nogajunさんの`pandoc-writer.odt`を変換してみる
 -   Markdown (Pandoc’s)
     -   `$ pandoc pandoc-writer.odt -o pandoc-writer.md`
 -   reStructuredText (Sphinxなどで使用)
     -   `$ pandoc pandoc-writer.odt -o pandoc-writer.rst`
+
+------------------------------------------------------------------------
+
+Writer文書からLaTeX文書に変換してみる
+=====================================
+
 -   LaTeX
     -   デフォルトはLuaLaTeX/XeLaTeXが必要なので注意
-    -   詳細: [BXjscls がまた新しくなった（v1.1a） - マクロツイーター](http://d.hatena.ne.jp/zrbabbler/20160228/1456622107)
+        -   LuaLaTeX
+        -   XeLaTeXを使う場合: [BXjscls がまた新しくなった（v1.1a） - マクロツイーター](http://d.hatena.ne.jp/zrbabbler/20160228/1456622107)
     -   `$ pandoc -s pandoc-writer.odt -o pandoc-writer.tex`
     -   `-s`: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)
 
@@ -580,26 +605,60 @@ Pandocレシピ集
 
 ------------------------------------------------------------------------
 
--   MS Word/LibreOffice Writer
-    -   重いのでテキストファイルで下書きしたい
-    -   バージョン管理をしたいけど、Word文書はGit管理が面倒
--   オフィスの共有サーバにある大量の文書（Word, LaTeXなど）を別の書式（HTMLなど）に変換したい
+Pandocレシピ集
+==============
+
+-   オフィスにある大量の文書を別の書式に変換したい
 -   MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
 -   Markdownでスライドショーを作りたい
--   電子書籍を作りたい
+
+------------------------------------------------------------------------
+
+オフィスにある大量の文書を別の書式に変換したい
+==============================================
+
+処理したいファイルが大量にある場合は、スクリプトにPandocを組み込みます。
+
+1.  下準備: 他のツールなどで、なんとかしてPandocが処理できる書式に変換する
+    -   おすすめ: HTML（多くのツールでエクスポートできるので）
+2.  Pandocをスクリプトの中で使う
+    -   シェルスクリプトで直接使う
+    -   スクリプト言語の外部コマンド機能で呼ぶ
+    -   スクリプト言語のライブラリから呼ぶ（古い場合があるので注意）
+
+------------------------------------------------------------------------
+
+MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
+=================================================
+
+-   MediaWiki: WikipediaなどのベースにあるWikiシステム
+    -   拡張子は知らなかったので適当です（すみません）
+-   Sphinx: HTMLによる一式のドキュメンテーションサイトを作るツール
+
+<!-- -->
+
+    $ pandoc input.wiki -f mediawiki -t rst -o output.rst
+
+-   Pandocはドキュメンテーションシステムの引越に使える（かも？）
 
 ------------------------------------------------------------------------
 
 Markdownでスライドショーを作りたい
 ==================================
 
--   このスライド自体をPandocで生成しました
--   今回は「reveal.js」形式に変換
-    -   HTML+JavaScriptによるプレゼンテーション
-    -   クライアントサイドで完結→GitHub Pagesにアップロード可能
--   補足: Pandocでは他のプレゼン形式にも変換できる
-    -   LaTeX Beamer
-    -   reveal.js以外のHTMLプレゼン（割愛）
+このスライド自体をPandocで生成しました
+
+-   [Pandoc’s Markdown](http://pandoc.org/MANUAL.html#pandocs-markdown)の書式に従って原稿を書く
+    -   もちろんこれ以外の書式でも、Pandocが対応していれば書けます
+-   Pandocで変換する
+    -   今回は「reveal.js」形式（HTML+JavaScriptによるプレゼン）に変換
+    -   `$ pandoc input.p.md -s -f markdown -t revealjs -o index.html`
+        -   実際のファイルは次スライドで
+        -   `-s`: standalone (ヘッダ・フッタの付いた完全な文書を出力)
+-   アップロードする
+    -   [GitHub Pages](https://pages.github.com/)を使うと、直接GitHubにpushすればアップロードできます
+        -   この場合は、`.nojekyll`という空ファイルを置かないと、404エラーになるので注意
+-   その他 LaTeX Beamer にも変換できます
 
 ------------------------------------------------------------------------
 
@@ -607,10 +666,50 @@ Markdownでスライドショーを作りたい
 ==================
 
 -   このスライド自体がGitHub Pagesにアップロードされています
--   [GitHubリポジトリ](https://github.com/sky-y/libreoffice-kansai-14-pandoc)
-    -   [ソース (Pandoc’s Markdown)](https://raw.githubusercontent.com/sky-y/libreoffice-kansai-14-pandoc/master/index.p.md)
-    -   [復習用資料 (GitHub Flavored Markdown)](https://github.com/sky-y/libreoffice-kansai-14-pandoc/blob/master/index_github.md)
-    -   [発表用スライド (HTML/reveal.js)](https://sky-y.github.io/libreoffice-kansai-14-pandoc/)
+-   [GitHubリポジトリ](https://github.com/sky-y/osc-kyoto2017-pandoc)
+    -   [発表用スライド (HTML/reveal.js)](https://sky-y.github.io/osc-kyoto2017-pandoc/)
+    -   [スライドのMarkdownソース (Pandoc’s Markdown)](https://raw.githubusercontent.com/sky-y/osc-kyoto2017-pandoc/master/index.p.md)
+    -   [復習用資料 (GitHub Flavored Markdown)](https://github.com/sky-y/osc-kyoto2017-pandoc/blob/master/index_github.md)
+    -   変換の補助にGulpを使っています（`make`のようなもの）
+
+------------------------------------------------------------------------
+
+おまけ：電子書籍について
+========================
+
+-   PandocもEPUB出力できる
+    -   素朴なEPUBなら日本語でも`-t epub3`で出力できる
+-   Markdown→EPUB変換には「[でんでんコンバーター](https://conv.denshochan.com/)」をおすすめします
+    -   ルビや縦中横が使えて、細かい設定や組版がしやすい
+    -   記法: [でんでんマークダウン](https://conv.denshochan.com/markdown)
+        -   PHP Markdown Extraベース
+-   提案
+    -   Pandocに対応する好きな記法で原稿を書く
+    -   `pandoc -t markdown_phpextra`ででんでんマークダウン向けに変換
+    -   [でんでんエディター](https://edit.denshochan.com/)にペーストして仕上げる
+
+------------------------------------------------------------------------
+
+Pandocの高度な使い方（ごく簡潔に）
+==================================
+
+------------------------------------------------------------------------
+
+フィルタ機能
+============
+
+-   中間文書をJSON形式に出す
+-   それを外部スクリプトが標準入力で受け取り処理する
+-   それを標準出力に出して、Pandocに戻す
+
+<img src="figure/pandoc_block3.jpg" alt="Pandocの処理フロー（フィルタ付き）" style="width:80.0%" />
+
+------------------------------------------------------------------------
+
+フィルタ機能ができること
+========================
+
+-   
 
 ------------------------------------------------------------------------
 
@@ -642,8 +741,9 @@ Pandocの今後の課題
 日本Pandocユーザ会
 ==================
 
--   Webサイトはリニューアル予定
--   Slackを始めました
+-   Webサイト (リニューアル予定)
+    -   <http://sky-y.github.io/site-pandoc-jp/>
+-   Slackを始めました（**どなたでも歓迎します！**）
     -   [Slack登録フォーム](https://docs.google.com/forms/d/e/1FAIpQLScdXINuMSFlKFk9YClkDUtvZNaYFWVSiJyleYjtMVbIHqwJhA/viewform)
 
 ------------------------------------------------------------------------
@@ -653,7 +753,6 @@ Pandocの今後の課題
 
 -   [ドキュメンテーションWiki (GitHub)](https://github.com/doc-wiki-jp/wiki/wiki)
 -   誰でも編集歓迎します（要GitHubアカウント）
--   特にLibreOffice関連の記事が不足しています
 
 ------------------------------------------------------------------------
 
@@ -662,4 +761,4 @@ Q&A
 
 -   連絡先
     -   <sky.y.0079@gmail.com>
-    -   Twitter: \[@sky\_y\](https://twitter.com/sky\_y)
+    -   Twitter: [すかいゆき・藤原 惟 @sky\_y](https://twitter.com/sky_y)
