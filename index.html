@@ -619,7 +619,9 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 </section>
 <section id="とりあえず変換してみる-pandocコマンド" class="slide level1">
 <h1>とりあえず変換してみる: pandocコマンド</h1>
-<pre><code>$ pandoc atarashii_kempo.md -o atarashii_kempo.odt</code></pre>
+<pre><code>$ git clone https://github.com/sky-y/osc-kyoto2017-pandoc.git
+$ cd sample
+$ pandoc atarashii_kempo.md -o atarashii_kempo.odt</code></pre>
 <ul>
 <li><code>-o</code>: 出力ファイル名
 <ul>
@@ -681,8 +683,8 @@ $ xdg-open atarashii_kempo.odt  # Linux (GNOME, KDE, Xfce)
 <h1>(3) Pandocの変換時にテンプレートをオプションで指定する</h1>
 <p>注意: バージョンによって使用するオプションが違います</p>
 <ul>
-<li><code>--reference-odt</code>: Pandoc 2.xの指定</li>
-<li><code>--reference-doc</code>: Pandoc 1.xの指定</li>
+<li><code>--reference-odt</code>: Pandoc 1.xの指定</li>
+<li><code>--reference-doc</code>: Pandoc 2.xの指定</li>
 <li>バージョンは <code>pandoc -v</code> で分かります</li>
 <li>実際に使えるコマンドは <code>pandoc -h</code>で分かります
 <ul>
@@ -737,15 +739,28 @@ $ pandoc atarashii_kenpo.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 <section id="writer文書からlatex文書に変換してみる" class="slide level1">
 <h1>Writer文書からLaTeX文書に変換してみる</h1>
 <ul>
-<li>LaTeX
+<li>LaTeX (ヘッダ・フッタ抜き)
 <ul>
-<li>デフォルトはLuaLaTeX/XeLaTeXが必要なので注意
+<li><code>$ pandoc pandoc-writer.odt -o pandoc-writer.tex</code></li>
+<li>あとで別のLaTeXソースファイルに貼り付けたり、スクリプトで組み入れたりするのに便利</li>
+<li>PandocはpLaTeXに対応しないので、pLaTeX前提ならこちらがおすすめ</li>
+</ul></li>
+<li>LaTeX (ヘッダ・フッタ入り)
 <ul>
-<li>LuaLaTeX</li>
+<li><code>$ pandoc -s pandoc-writer.odt -o pandoc-writer.tex</code>
+<ul>
+<li><code>-s</code>: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)</li>
+</ul></li>
+<li>注意：LuaLaTeX/XeLaTeXのみ対応
+<ul>
+<li><code>$ pandoc -s pandoc-writer.odt --latex-engine=lualatex -o pandoc-writer.tex</code></li>
+<li><code>--latex-engine=</code>オプションで<code>lualatex</code> or <code>xelatex</code>を指定</li>
+</ul></li>
+<li>日本語設定
+<ul>
+<li><a href="https://ja.osdn.net/projects/luatex-ja/wiki/LuaTeX-ja%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">LuaLaTeX: LuaTeX-jaの使い方</a></li>
 <li>XeLaTeXを使う場合: <a href="http://d.hatena.ne.jp/zrbabbler/20160228/1456622107">BXjscls がまた新しくなった（v1.1a） - マクロツイーター</a></li>
 </ul></li>
-<li><code>$ pandoc -s pandoc-writer.odt -o pandoc-writer.tex</code></li>
-<li><code>-s</code>: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)</li>
 </ul></li>
 </ul>
 </section>

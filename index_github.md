@@ -501,6 +501,8 @@ Pandocの基本的な使い方
 とりあえず変換してみる: pandocコマンド
 ======================================
 
+    $ git clone https://github.com/sky-y/osc-kyoto2017-pandoc.git
+    $ cd sample
     $ pandoc atarashii_kempo.md -o atarashii_kempo.odt
 
 -   `-o`: 出力ファイル名
@@ -561,8 +563,8 @@ Pandocの基本的な使い方
 
 注意: バージョンによって使用するオプションが違います
 
--   `--reference-odt`: Pandoc 2.xの指定
--   `--reference-doc`: Pandoc 1.xの指定
+-   `--reference-odt`: Pandoc 1.xの指定
+-   `--reference-doc`: Pandoc 2.xの指定
 -   バージョンは `pandoc -v` で分かります
 -   実際に使えるコマンドは `pandoc -h`で分かります
     -   UNIX系なら `pandoc -h | grep 'reference'` で絞れるはず
@@ -610,12 +612,19 @@ Writer文書からMarkdown/reST文書に変換してみる
 Writer文書からLaTeX文書に変換してみる
 =====================================
 
--   LaTeX
-    -   デフォルトはLuaLaTeX/XeLaTeXが必要なので注意
-        -   LuaLaTeX
-        -   XeLaTeXを使う場合: [BXjscls がまた新しくなった（v1.1a） - マクロツイーター](http://d.hatena.ne.jp/zrbabbler/20160228/1456622107)
+-   LaTeX (ヘッダ・フッタ抜き)
+    -   `$ pandoc pandoc-writer.odt -o pandoc-writer.tex`
+    -   あとで別のLaTeXソースファイルに貼り付けたり、スクリプトで組み入れたりするのに便利
+    -   PandocはpLaTeXに対応しないので、pLaTeX前提ならこちらがおすすめ
+-   LaTeX (ヘッダ・フッタ入り)
     -   `$ pandoc -s pandoc-writer.odt -o pandoc-writer.tex`
-    -   `-s`: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)
+        -   `-s`: 文書として完全になるようにヘッダ・フッタを付ける (standaloneモード)
+    -   注意：LuaLaTeX/XeLaTeXのみ対応
+        -   `$ pandoc -s pandoc-writer.odt --latex-engine=lualatex -o pandoc-writer.tex`
+        -   `--latex-engine=`オプションで`lualatex` or `xelatex`を指定
+    -   日本語設定
+        -   [LuaLaTeX: LuaTeX-jaの使い方](https://ja.osdn.net/projects/luatex-ja/wiki/LuaTeX-ja%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9)
+        -   XeLaTeXを使う場合: [BXjscls がまた新しくなった（v1.1a） - マクロツイーター](http://d.hatena.ne.jp/zrbabbler/20160228/1456622107)
 
 ------------------------------------------------------------------------
 
