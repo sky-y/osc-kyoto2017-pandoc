@@ -1,6 +1,7 @@
 ---
 title: Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する
-author: 藤原 由来
+subtitle: OSC京都2017 1日目 セミナー
+author: 藤原 由来（日本Pandocユーザ会）
 date: 2017年8月4日
 revealjs-url: reveal.js-3.4.0
 theme: sky-sky-y
@@ -31,9 +32,11 @@ height: 720
 # 自己紹介
 
 - 名前
-    - 藤原 由来 (本名, [GitHub](https://github.com/sky-y))
-    - 藤原 惟（[ブログ](http://www.3rd-p-zombie.net/)）
-    - すかいゆき（[Twitter](https://twitter.com/sky_y)）
+    - 藤原 由来 (本名)
+        - [GitHub](https://github.com/sky-y)
+        - [Facebook](https://fb.me/sky.yuki.f)
+    - すかいゆき・藤原 惟
+        - [Twitter](https://twitter.com/sky_y)
 - 職業
     - フリープログラマ・技術ライター
     - 専門学校 非常勤講師
@@ -62,6 +65,8 @@ height: 720
 ----
 
 # いきなりですが質問です
+
+<!-- .slide: class="center" -->
 
 ----
 
@@ -102,15 +107,13 @@ height: 720
 
 ----
 
-# この発表の概要
+# この発表でやること
 
-- 質問
 - Pandocの概要
 - Pandocをインストールする
 - Pandocの基本的な使い方
     - Markdown ↔ LibreOffice Writer を例に
-- Pandocレシピ集
-- Pandocの高度な使い方（ごく簡潔に）
+- Pandocの応用
 - まとめ・お知らせ
 
 ----
@@ -123,10 +126,14 @@ height: 720
     - Pandocとの組み合わせができる場合もある
 - 表形式のドキュメント（Excel, CSVなど）
     - 現状のPandocが扱える文書モデルから離れるので
+    - 「文書の一部」として扱うことはPandocで可能です
 
 ----
 
 # Pandocの概要
+
+<!-- .slide: class="center" -->
+
 
 ----
 
@@ -179,6 +186,13 @@ height: 720
 
 ----
 
+# Markdown？
+
+<!-- .slide: class="center" -->
+
+
+----
+
 # そもそもMarkdownって何？
 
 - このスライド自体が、実はMarkdownで書かれています
@@ -190,6 +204,20 @@ height: 720
     - おすすめ早見表: [Markdown Reference (CommonMark)](http://commonmark.org/help/)
     - 足りない部分は、各ツール・サービスのドキュメントを参照
     - プレビューを行うのが鉄則
+
+----
+
+# 裏方としてのPandoc
+
+- 実は裏でPandocが動いているケースもいくつかあります
+- R: [R Markdown](http://rmarkdown.rstudio.com/)
+    - [RStudio](https://www.rstudio.com/)という統合環境の中で使える
+    - 厳密には[knitr](https://yihui.name/knitr/)の機能
+- Python: [Jupyter](http://jupyter.org/) Notebook
+    - [nbconvert](https://github.com/jupyter/nbconvert)
+- テキストエディタ: [Typora](https://typora.io/)
+    - Markdownエディタの一つ (Win/Mac/Linux)
+    - コマンド苦手な人でも、Pandocの変換機能を使えます
 
 ----
 
@@ -225,6 +253,12 @@ height: 720
 ----
 
 ![Pandocの処理フロー（詳細）](figure/pandoc_block2.jpg){ width=80% }
+
+----
+
+# PandocにおけるMarkdown
+
+<!-- .slide: class="center" -->
 
 ----
 
@@ -288,18 +322,9 @@ slideNumber: true
 
 ----
 
-# 補足: Markdownと標準仕様
-
-- RFC
-    - [RFC 7763 - The text/markdown Media Type](https://tools.ietf.org/html/rfc7763)
-    - [RFC 7764 - Guidance on Markdown: Design Philosophies, Stability Strategies, and Select Registrations](https://tools.ietf.org/html/rfc7764)
-- RFCでも方言は統一できなかった
-    - 代わりに、Media Typeにて「Markdownであること」と「方言の名前」を明示する方法を定めた
-    - 参考: <http://tk0miya.hatenablog.com/entry/2016/12/30/205418>
-
-----
-
 # Pandocをインストールする
+
+<!-- .slide: class="center" -->
 
 ----
 
@@ -435,8 +460,9 @@ $ echo "**Hello**" | pandoc -f markdown -t html5 -o hello.pdf
 
 ----
 
-
 # Pandocの基本的な使い方
+
+<!-- .slide: class="center" -->
 
 ----
 
@@ -453,7 +479,7 @@ $ echo "**Hello**" | pandoc -f markdown -t html5 -o hello.pdf
 - Markdown文書からWriter文書に変換する
     - とりあえず変換してみる
     - 綺麗なWriter文書を生成する: reference機能
-- Writer文書をMarkdownに変換する
+- Writer文書をMarkdownなどに変換する
 - 以下の作業では、[GitHubリポジトリ](https://github.com/sky-y/osc-kyoto2017-pandoc)のsampleディレクトリにあるファイルを使います
 - atarashii_kenpo.md: [あたらしい憲法のはなし(Markdown版)](https://github.com/nogajun/story_of_the_new_constitution)より
     - nogajunさん編、Public Domain
@@ -526,8 +552,8 @@ $ pandoc --print-default-data-file reference.odt > reference.odt
     - UNIX系なら `pandoc -h | grep 'reference'` で絞れるはず
 
 ```
-$ pandoc connpass.md --reference-odt=reference.odt -o atarashii_kenpo.odt
-$ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
+$ pandoc atarashii_kenpo.md --reference-odt=reference.odt -o atarashii_kenpo.odt
+$ pandoc atarashii_kenpo.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 ```
 
 ----
@@ -554,6 +580,7 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 # Writer文書からMarkdown/reST文書に変換してみる
 
 - nogajunさんの`pandoc-writer.odt`を変換してみる
+    - [nogajun/pandoc-writer](https://github.com/nogajun/pandoc-writer) (CC BY-SA 4.0)
 - Markdown (Pandoc's)
     - `$ pandoc pandoc-writer.odt -o pandoc-writer.md`
 - reStructuredText (Sphinxなどで使用)
@@ -574,19 +601,22 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 
 # Q&A
 
-## (特にPandocコマンドについて)
+<!-- .slide: class="center" -->
 
 ----
 
-# Pandocレシピ集
+# Pandocの応用
+
+<!-- .slide: class="center" -->
 
 ----
 
-# Pandocレシピ集
+# Pandocの応用
 
 - オフィスにある大量の文書を別の書式に変換したい
-- MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
 - Markdownでスライドショーを作りたい
+- フィルタ機能
+- おまけ：電子書籍について
 
 ----
 
@@ -603,17 +633,13 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt
 
 ----
 
-# MediaWiki記法で書いた原稿をSphinx(reST)で使いたい
+# Pandocをスクリプトとして呼ぶ例（その他）
 
-- MediaWiki: WikipediaなどのベースにあるWikiシステム
-    - 拡張子は知らなかったので適当です（すみません）
-- Sphinx: HTMLによる一式のドキュメンテーションサイトを作るツール
-
-```
-$ pandoc input.wiki -f mediawiki -t rst -o output.rst
-```
-
-- Pandocはドキュメンテーションシステムの引越に使える（かも？）
+- 各種エディタのプラグイン・拡張で対応
+    - Atom, VS Code, ...
+- 特にVimの場合
+    - LaTeX文書を書くときの補助として「Markdownを書いてその場でLaTeXに変換する」拡張がある
+    - [TeXで書くのめんどくさい部分はmarkdownで書いちゃえば最強じゃないかな?【Vim + pandoc】 - Qiita](http://qiita.com/ssh0/items/679ac9dd3c33b0e5cd90)
 
 ----
 
@@ -646,25 +672,6 @@ $ pandoc input.wiki -f mediawiki -t rst -o output.rst
 
 ----
 
-# おまけ：電子書籍について
-
-- PandocもEPUB出力できる
-    - 素朴なEPUBなら日本語でも`-t epub3`で出力できる
-- Markdown→EPUB変換には「[でんでんコンバーター](https://conv.denshochan.com/)」をおすすめします
-    - ルビや縦中横が使えて、細かい設定や組版がしやすい
-    - 記法: [でんでんマークダウン](https://conv.denshochan.com/markdown)
-        - PHP Markdown Extraベース
-- 提案
-    - Pandocに対応する好きな記法で原稿を書く
-    - `pandoc -t markdown_phpextra`ででんでんマークダウン向けに変換
-    - [でんでんエディター](https://edit.denshochan.com/)にペーストして仕上げる
-
-----
-
-# Pandocの高度な使い方（ごく簡潔に）
-
-----
-
 # フィルタ機能
 
 - 中間文書をJSON形式に出す
@@ -677,7 +684,31 @@ $ pandoc input.wiki -f mediawiki -t rst -o output.rst
 
 # フィルタ機能ができること
 
-- 
+- 詳しくは[Pandoc Filters (GitHub Wiki)](https://github.com/jgm/pandoc/wiki/Pandoc-Filters)を参照
+- 引用を入れる (pandoc-citeproc, pandoc-crossref)
+    - [MarkdownとPandocを使って論文っぽい文章を書く | inoblog](https://inody1991.tumblr.com/post/134742076815/markdown%E3%81%A8pandoc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E8%AB%96%E6%96%87%E3%81%A3%E3%81%BD%E3%81%84%E6%96%87%E7%AB%A0%E3%82%92%E6%9B%B8%E3%81%8F)
+- 図表を入れる
+    -  ([mermaid-filter](https://github.com/raghur/mermaid-filter)): [mermaid](https://knsv.github.io/mermaid/#mermaid)で使えるフローチャート、ガントチャート、シーケンス図
+    - [pantable](https://github.com/ickc/pantable): CSVファイルを表として読み込む
+- 外部ファイルの読み込み
+    - Node.jsで書くチュートリアル: [pandocでMarkdownを拡張しコードをインポート出来るfilterを書く | Web Scratch](http://efcl.info/2014/0301/res3692/)
+- 過去のチュートリアル「HaskellでPandocフィルタを実装する」
+    - [Haskell with Skype Pandocチュートリアル 第2回](https://github.com/sky-y/haskell-skype-pandoc-2)
+
+----
+
+# おまけ：電子書籍について
+
+- PandocもEPUB出力できる
+    - 素朴なEPUBなら日本語でも`-t epub3`で出力できる
+- Markdown→EPUB変換には「[でんでんコンバーター](https://conv.denshochan.com/)」をおすすめします
+    - ルビや縦中横が使えて、細かい設定や組版がしやすい
+    - 記法: [でんでんマークダウン](https://conv.denshochan.com/markdown)
+        - PHP Markdown Extraベース
+- 提案
+    - Pandocに対応する好きな記法で原稿を書く
+    - `pandoc -t markdown_phpextra`で、でんでんマークダウン向けに変換
+    - [でんでんエディター](https://edit.denshochan.com/)にペーストして仕上げる
 
 ----
 
@@ -687,7 +718,11 @@ $ pandoc input.wiki -f mediawiki -t rst -o output.rst
 
 # 今日やったこと
 
-- ここに書く
+- Pandocの概要
+- Pandocをインストールする
+- Pandocの基本的な使い方
+    - Markdown ↔ LibreOffice Writer を例に
+- Pandocの応用
 
 ----
 
@@ -700,6 +735,7 @@ $ pandoc input.wiki -f mediawiki -t rst -o output.rst
     - Excel文書など→Excel方眼紙への対策には致命的
     - サードパーティのプリプロセッサにより部分的に変換する手段はある
         - 一部の図表（Graphvizなど）はこの方法で取り込むことができる
+    - 参考: [Excel方眼紙公開討論会 (9/30＠東京)](https://www.forguncy.com/information/events/excelforguncy)
 
 ----
 
@@ -722,5 +758,6 @@ $ pandoc input.wiki -f mediawiki -t rst -o output.rst
 # Q&A
 
 - 連絡先
-    - <sky.y.0079@gmail.com>
+    - メールフォーム: <https://goo.gl/forms/FPB22jv9S5NP4fpx2>
     - Twitter: [すかいゆき・藤原 惟 \@sky_y](https://twitter.com/sky_y)
+    - Facebook: <https://fb.me/sky.yuki.f>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="author" content="藤原 由来">
+  <meta name="author" content="藤原 由来（日本Pandocユーザ会）">
   <title>Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,7 +29,8 @@
 
 <section>
   <h1 class="title">Pandoc入門：MarkdownからHTML・PDF・Writer/Word文書・スライドを生成する</h1>
-  <p class="author">藤原 由来</p>
+  <p class="subtitle">OSC京都2017 1日目 セミナー</p>
+  <p class="author">藤原 由来（日本Pandocユーザ会）</p>
   <p class="date">2017年8月4日</p>
 </section>
 
@@ -55,9 +56,15 @@
 <ul>
 <li>名前
 <ul>
-<li>藤原 由来 (本名, <a href="https://github.com/sky-y">GitHub</a>)</li>
-<li>藤原 惟（<a href="http://www.3rd-p-zombie.net/">ブログ</a>）</li>
-<li>すかいゆき（<a href="https://twitter.com/sky_y">Twitter</a>）</li>
+<li>藤原 由来 (本名)
+<ul>
+<li><a href="https://github.com/sky-y">GitHub</a></li>
+<li><a href="https://fb.me/sky.yuki.f">Facebook</a></li>
+</ul></li>
+<li>すかいゆき・藤原 惟
+<ul>
+<li><a href="https://twitter.com/sky_y">Twitter</a></li>
+</ul></li>
 </ul></li>
 <li>職業
 <ul>
@@ -97,6 +104,7 @@
 </section>
 <section id="いきなりですが質問です" class="slide level1">
 <h1>いきなりですが質問です</h1>
+<!-- .slide: class="center" -->
 </section>
 <section id="q1-普段はどんなファイルやドキュメントを扱っていますか" class="slide level1">
 <h1>Q1: 普段はどんなファイルやドキュメントを扱っていますか？</h1>
@@ -145,18 +153,16 @@
 <li>その他</li>
 </ul>
 </section>
-<section id="この発表の概要" class="slide level1">
-<h1>この発表の概要</h1>
+<section id="この発表でやること" class="slide level1">
+<h1>この発表でやること</h1>
 <ul>
-<li>質問</li>
 <li>Pandocの概要</li>
 <li>Pandocをインストールする</li>
 <li>Pandocの基本的な使い方
 <ul>
 <li>Markdown ↔ LibreOffice Writer を例に</li>
 </ul></li>
-<li>Pandocレシピ集</li>
-<li>Pandocの高度な使い方（ごく簡潔に）</li>
+<li>Pandocの応用</li>
 <li>まとめ・お知らせ</li>
 </ul>
 </section>
@@ -174,11 +180,13 @@
 <li>表形式のドキュメント（Excel, CSVなど）
 <ul>
 <li>現状のPandocが扱える文書モデルから離れるので</li>
+<li>「文書の一部」として扱うことはPandocで可能です</li>
 </ul></li>
 </ul>
 </section>
 <section id="pandocの概要" class="slide level1">
 <h1>Pandocの概要</h1>
+<!-- .slide: class="center" -->
 </section>
 <section id="こんなことに困っていませんか" class="slide level1">
 <h1>こんなことに困っていませんか？</h1>
@@ -242,6 +250,10 @@
 
 <p><a href="http://pandoc.org/diagram.jpg"><img src="figure/pandoc-diagram_h800.jpg" height="500" /></a></p>
 </section>
+<section id="markdown" class="slide level1">
+<h1>Markdown？</h1>
+<!-- .slide: class="center" -->
+</section>
 <section id="そもそもmarkdownって何" class="slide level1">
 <h1>そもそもMarkdownって何？</h1>
 <ul>
@@ -257,6 +269,26 @@
 <li>おすすめ早見表: <a href="http://commonmark.org/help/">Markdown Reference (CommonMark)</a></li>
 <li>足りない部分は、各ツール・サービスのドキュメントを参照</li>
 <li>プレビューを行うのが鉄則</li>
+</ul></li>
+</ul>
+</section>
+<section id="裏方としてのpandoc" class="slide level1">
+<h1>裏方としてのPandoc</h1>
+<ul>
+<li>実は裏でPandocが動いているケースもいくつかあります</li>
+<li>R: <a href="http://rmarkdown.rstudio.com/">R Markdown</a>
+<ul>
+<li><a href="https://www.rstudio.com/">RStudio</a>という統合環境の中で使える</li>
+<li>厳密には<a href="https://yihui.name/knitr/">knitr</a>の機能</li>
+</ul></li>
+<li>Python: <a href="http://jupyter.org/">Jupyter</a> Notebook
+<ul>
+<li><a href="https://github.com/jupyter/nbconvert">nbconvert</a></li>
+</ul></li>
+<li>テキストエディタ: <a href="https://typora.io/">Typora</a>
+<ul>
+<li>Markdownエディタの一つ (Win/Mac/Linux)</li>
+<li>コマンド苦手な人でも、Pandocの変換機能を使えます</li>
 </ul></li>
 </ul>
 </section>
@@ -308,6 +340,10 @@
 <figure>
 <img src="figure/pandoc_block2.jpg" alt="Pandocの処理フロー（詳細）" style="width:80.0%" /><figcaption>Pandocの処理フロー（詳細）</figcaption>
 </figure>
+</section>
+<section id="pandocにおけるmarkdown" class="slide level1">
+<h1>PandocにおけるMarkdown</h1>
+<!-- .slide: class="center" -->
 </section>
 <section id="pandocが扱えるmarkdown方言" class="slide level1">
 <h1>Pandocが扱えるMarkdown方言</h1>
@@ -389,23 +425,9 @@ transitionSpeed: fast
 slideNumber: true
 ...</code></pre>
 </section>
-<section id="補足-markdownと標準仕様" class="slide level1">
-<h1>補足: Markdownと標準仕様</h1>
-<ul>
-<li>RFC
-<ul>
-<li><a href="https://tools.ietf.org/html/rfc7763">RFC 7763 - The text/markdown Media Type</a></li>
-<li><a href="https://tools.ietf.org/html/rfc7764">RFC 7764 - Guidance on Markdown: Design Philosophies, Stability Strategies, and Select Registrations</a></li>
-</ul></li>
-<li>RFCでも方言は統一できなかった
-<ul>
-<li>代わりに、Media Typeにて「Markdownであること」と「方言の名前」を明示する方法を定めた</li>
-<li>参考: <a href="http://tk0miya.hatenablog.com/entry/2016/12/30/205418" class="uri">http://tk0miya.hatenablog.com/entry/2016/12/30/205418</a></li>
-</ul></li>
-</ul>
-</section>
 <section id="pandocをインストールする" class="slide level1">
 <h1>Pandocをインストールする</h1>
+<!-- .slide: class="center" -->
 </section>
 <section id="ターミナルを開く" class="slide level1">
 <h1>ターミナルを開く</h1>
@@ -567,6 +589,7 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 </section>
 <section id="pandocの基本的な使い方" class="slide level1">
 <h1>Pandocの基本的な使い方</h1>
+<!-- .slide: class="center" -->
 </section>
 <section id="これからやること" class="slide level1">
 <h1>これからやること</h1>
@@ -586,7 +609,7 @@ $ echo &quot;**Hello**&quot; | pandoc -f markdown -t html
 <li>とりあえず変換してみる</li>
 <li>綺麗なWriter文書を生成する: reference機能</li>
 </ul></li>
-<li>Writer文書をMarkdownに変換する</li>
+<li>Writer文書をMarkdownなどに変換する</li>
 <li>以下の作業では、<a href="https://github.com/sky-y/osc-kyoto2017-pandoc">GitHubリポジトリ</a>のsampleディレクトリにあるファイルを使います</li>
 <li>atarashii_kenpo.md: <a href="https://github.com/nogajun/story_of_the_new_constitution">あたらしい憲法のはなし(Markdown版)</a>より
 <ul>
@@ -666,8 +689,8 @@ $ xdg-open atarashii_kempo.odt  # Linux (GNOME, KDE, Xfce)
 <li>UNIX系なら <code>pandoc -h | grep 'reference'</code> で絞れるはず</li>
 </ul></li>
 </ul>
-<pre><code>$ pandoc connpass.md --reference-odt=reference.odt -o atarashii_kenpo.odt
-$ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code></pre>
+<pre><code>$ pandoc atarashii_kenpo.md --reference-odt=reference.odt -o atarashii_kenpo.odt
+$ pandoc atarashii_kenpo.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code></pre>
 </section>
 <section id="補足-reference.odtをユーザデータディレクトリに入れる" class="slide level1">
 <h1>補足: reference.odtをユーザデータディレクトリに入れる</h1>
@@ -697,7 +720,10 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 <section id="writer文書からmarkdownrest文書に変換してみる" class="slide level1">
 <h1>Writer文書からMarkdown/reST文書に変換してみる</h1>
 <ul>
-<li>nogajunさんの<code>pandoc-writer.odt</code>を変換してみる</li>
+<li>nogajunさんの<code>pandoc-writer.odt</code>を変換してみる
+<ul>
+<li><a href="https://github.com/nogajun/pandoc-writer">nogajun/pandoc-writer</a> (CC BY-SA 4.0)</li>
+</ul></li>
 <li>Markdown (Pandoc’s)
 <ul>
 <li><code>$ pandoc pandoc-writer.odt -o pandoc-writer.md</code></li>
@@ -725,17 +751,19 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 </section>
 <section id="qa" class="slide level1">
 <h1>Q&amp;A</h1>
-<h2 id="特にpandocコマンドについて">(特にPandocコマンドについて)</h2>
+<!-- .slide: class="center" -->
 </section>
-<section id="pandocレシピ集" class="slide level1">
-<h1>Pandocレシピ集</h1>
+<section id="pandocの応用" class="slide level1">
+<h1>Pandocの応用</h1>
+<!-- .slide: class="center" -->
 </section>
-<section id="pandocレシピ集-1" class="slide level1">
-<h1>Pandocレシピ集</h1>
+<section id="pandocの応用-1" class="slide level1">
+<h1>Pandocの応用</h1>
 <ul>
 <li>オフィスにある大量の文書を別の書式に変換したい</li>
-<li>MediaWiki記法で書いた原稿をSphinx(reST)で使いたい</li>
 <li>Markdownでスライドショーを作りたい</li>
+<li>フィルタ機能</li>
+<li>おまけ：電子書籍について</li>
 </ul>
 </section>
 <section id="オフィスにある大量の文書を別の書式に変換したい" class="slide level1">
@@ -754,18 +782,18 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 </ul></li>
 </ol>
 </section>
-<section id="mediawiki記法で書いた原稿をsphinxrestで使いたい" class="slide level1">
-<h1>MediaWiki記法で書いた原稿をSphinx(reST)で使いたい</h1>
+<section id="pandocをスクリプトとして呼ぶ例その他" class="slide level1">
+<h1>Pandocをスクリプトとして呼ぶ例（その他）</h1>
 <ul>
-<li>MediaWiki: WikipediaなどのベースにあるWikiシステム
+<li>各種エディタのプラグイン・拡張で対応
 <ul>
-<li>拡張子は知らなかったので適当です（すみません）</li>
+<li>Atom, VS Code, …</li>
 </ul></li>
-<li>Sphinx: HTMLによる一式のドキュメンテーションサイトを作るツール</li>
-</ul>
-<pre><code>$ pandoc input.wiki -f mediawiki -t rst -o output.rst</code></pre>
+<li>特にVimの場合
 <ul>
-<li>Pandocはドキュメンテーションシステムの引越に使える（かも？）</li>
+<li>LaTeX文書を書くときの補助として「Markdownを書いてその場でLaTeXに変換する」拡張がある</li>
+<li><a href="http://qiita.com/ssh0/items/679ac9dd3c33b0e5cd90">TeXで書くのめんどくさい部分はmarkdownで書いちゃえば最強じゃないかな?【Vim + pandoc】 - Qiita</a></li>
+</ul></li>
 </ul>
 </section>
 <section id="markdownでスライドショーを作りたい" class="slide level1">
@@ -808,6 +836,40 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 </ul></li>
 </ul>
 </section>
+<section id="フィルタ機能" class="slide level1">
+<h1>フィルタ機能</h1>
+<ul>
+<li>中間文書をJSON形式に出す</li>
+<li>それを外部スクリプトが標準入力で受け取り処理する</li>
+<li>それを標準出力に出して、Pandocに戻す</li>
+</ul>
+<figure>
+<img src="figure/pandoc_block3.jpg" alt="Pandocの処理フロー（フィルタ付き）" style="width:80.0%" /><figcaption>Pandocの処理フロー（フィルタ付き）</figcaption>
+</figure>
+</section>
+<section id="フィルタ機能ができること" class="slide level1">
+<h1>フィルタ機能ができること</h1>
+<ul>
+<li>詳しくは<a href="https://github.com/jgm/pandoc/wiki/Pandoc-Filters">Pandoc Filters (GitHub Wiki)</a>を参照</li>
+<li>引用を入れる (pandoc-citeproc, pandoc-crossref)
+<ul>
+<li><a href="https://inody1991.tumblr.com/post/134742076815/markdown%E3%81%A8pandoc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E8%AB%96%E6%96%87%E3%81%A3%E3%81%BD%E3%81%84%E6%96%87%E7%AB%A0%E3%82%92%E6%9B%B8%E3%81%8F">MarkdownとPandocを使って論文っぽい文章を書く | inoblog</a></li>
+</ul></li>
+<li>図表を入れる
+<ul>
+<li>(<a href="https://github.com/raghur/mermaid-filter">mermaid-filter</a>): <a href="https://knsv.github.io/mermaid/#mermaid">mermaid</a>で使えるフローチャート、ガントチャート、シーケンス図</li>
+<li><a href="https://github.com/ickc/pantable">pantable</a>: CSVファイルを表として読み込む</li>
+</ul></li>
+<li>外部ファイルの読み込み
+<ul>
+<li>Node.jsで書くチュートリアル: <a href="http://efcl.info/2014/0301/res3692/">pandocでMarkdownを拡張しコードをインポート出来るfilterを書く | Web Scratch</a></li>
+</ul></li>
+<li>過去のチュートリアル「HaskellでPandocフィルタを実装する」
+<ul>
+<li><a href="https://github.com/sky-y/haskell-skype-pandoc-2">Haskell with Skype Pandocチュートリアル 第2回</a></li>
+</ul></li>
+</ul>
+</section>
 <section id="おまけ電子書籍について" class="slide level1">
 <h1>おまけ：電子書籍について</h1>
 <ul>
@@ -826,29 +888,9 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 <li>提案
 <ul>
 <li>Pandocに対応する好きな記法で原稿を書く</li>
-<li><code>pandoc -t markdown_phpextra</code>ででんでんマークダウン向けに変換</li>
+<li><code>pandoc -t markdown_phpextra</code>で、でんでんマークダウン向けに変換</li>
 <li><a href="https://edit.denshochan.com/">でんでんエディター</a>にペーストして仕上げる</li>
 </ul></li>
-</ul>
-</section>
-<section id="pandocの高度な使い方ごく簡潔に" class="slide level1">
-<h1>Pandocの高度な使い方（ごく簡潔に）</h1>
-</section>
-<section id="フィルタ機能" class="slide level1">
-<h1>フィルタ機能</h1>
-<ul>
-<li>中間文書をJSON形式に出す</li>
-<li>それを外部スクリプトが標準入力で受け取り処理する</li>
-<li>それを標準出力に出して、Pandocに戻す</li>
-</ul>
-<figure>
-<img src="figure/pandoc_block3.jpg" alt="Pandocの処理フロー（フィルタ付き）" style="width:80.0%" /><figcaption>Pandocの処理フロー（フィルタ付き）</figcaption>
-</figure>
-</section>
-<section id="フィルタ機能ができること" class="slide level1">
-<h1>フィルタ機能ができること</h1>
-<ul>
-<li></li>
 </ul>
 </section>
 <section id="まとめお知らせ" class="slide level1">
@@ -857,7 +899,13 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 <section id="今日やったこと" class="slide level1">
 <h1>今日やったこと</h1>
 <ul>
-<li>ここに書く</li>
+<li>Pandocの概要</li>
+<li>Pandocをインストールする</li>
+<li>Pandocの基本的な使い方
+<ul>
+<li>Markdown ↔ LibreOffice Writer を例に</li>
+</ul></li>
+<li>Pandocの応用</li>
 </ul>
 </section>
 <section id="pandocの今後の課題" class="slide level1">
@@ -875,6 +923,7 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 <ul>
 <li>一部の図表（Graphvizなど）はこの方法で取り込むことができる</li>
 </ul></li>
+<li>参考: <a href="https://www.forguncy.com/information/events/excelforguncy">Excel方眼紙公開討論会 (9/30＠東京)</a></li>
 </ul></li>
 </ul>
 </section>
@@ -903,8 +952,9 @@ $ pandoc connpass.md --reference-doc=reference.odt -o atarashii_kenpo.odt</code>
 <ul>
 <li>連絡先
 <ul>
-<li><a href="mailto:sky.y.0079@gmail.com">sky.y.0079@gmail.com</a></li>
+<li>メールフォーム: <a href="https://goo.gl/forms/FPB22jv9S5NP4fpx2" class="uri">https://goo.gl/forms/FPB22jv9S5NP4fpx2</a></li>
 <li>Twitter: <a href="https://twitter.com/sky_y">すかいゆき・藤原 惟 @sky_y</a></li>
+<li>Facebook: <a href="https://fb.me/sky.yuki.f" class="uri">https://fb.me/sky.yuki.f</a></li>
 </ul></li>
 </ul>
 </section>

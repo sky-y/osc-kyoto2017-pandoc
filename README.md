@@ -22,7 +22,8 @@ Pandocにより、様々なマークアップ言語で書かれたドキュメ�
 ## 連絡先
 
 - 藤原 由来
-    - Twitter（すかいゆき・藤原 惟）: [@sky_y](https://twitter.com/sky_y)
+    - Twitter（すかいゆき・藤原 惟）: [\@sky_y](https://twitter.com/sky_y)
+    - Facebook: <https://fb.me/sky.yuki.f>
     - メールフォーム: <https://goo.gl/forms/FPB22jv9S5NP4fpx2>
 
 ## ライセンス
